@@ -1,5 +1,5 @@
       const html5QrCode = new Html5Qrcode("reader"); //create a scan-element 
-      const config = { fps: 10, aspectRatio: 1.0, qrbox: 400};  //configuration of the camera, 10 frames per second and 1:1 ratio
+      const config = { fps: 10, aspectRatio: 1.0, qrbox: 200};  //configuration of the camera, 10 frames per second and 1:1 ratio
       
       var resulte;
 
