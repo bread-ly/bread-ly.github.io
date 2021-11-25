@@ -1,5 +1,5 @@
 var obj = JSON.parse(data);
-
+var scanned = true;
 const geturl = new URLSearchParams(window.location.search);
 const scannedid = geturl.get('k');
 const id = parseInt(scannedid);
@@ -7,8 +7,7 @@ const id = parseInt(scannedid);
 function ScanPage()
 {
     document.close();
-    window.location.replace("index.html");
-    StartFilming();
+    window.location.replace("index.html?scanned="+scanned);
 }
 
 document.getElementById("id").innerHTML = id;
