@@ -3,6 +3,7 @@
   <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QR Code Scanner first tests</title>
   <script src="https://unpkg.com/html5-qrcode"></script>
+  <script type="text/javascript" src="/docs/scanner.js"></script></script>
   <link rel="stylesheet" href="style.css"></link>
   <head>
     <div class="header">
@@ -16,47 +17,6 @@
     <button style="background-color: #f44336; margin-right: 0px;" class="button1" onclick="StopFilming()" >STOP!</button>
     <button style="background-color: #008CBA; margin-left: 0px;" class="button1" onclick="StartFilming()">Kamera</button>
     </div> 
-    <footer>
-      <script type="text/javascript" >
-        const html5QrCode = new Html5Qrcode("reader"); //create a scan-element 
-          const config = { fps: 50, aspectRatio: 1.0, qrbox: 250};  //configuration of the camera, 10 frames per second and 1:1 ratio
-          
-          var resulte;
-      
-          function StartFilming(){
-            html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanError); //start filming, looking for Scansuccess and config 
-          }
-          
-          function onScanSuccess(decodedText, decodedresult) {
-          StopFilming();
-          if (decodedText != null)
-          {
-            resulte = decodedText;
-            console.log("result gespeichert");
-          }
-          ShowResult();
-          }
-      
-          function onScanError(errorMessage){
-            console.log(errorMessage);
-          }
-      
-          function StopFilming(){
-            html5QrCode.stop().then((ignore) => { //stops the camera
-            }).catch((err) => {
-              // Stop failed, handle it.
-            });
-            html5QrCode.clear(); //clears the scanning area of the box
-          } 
-      
-          function ShowResult()
-          {
-            document.close();
-            window.location.replace("showdata.html?k="+resulte);
-      
-          }
-          </script>
-
-    </footer>
+    <footer></footer>
   </body>
 </html>
