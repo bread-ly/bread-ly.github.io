@@ -8,6 +8,7 @@ function ScanPage()
 {
     document.close();
     window.location.replace("index.html");
+    StartFilming();
 }
 
 document.getElementById("id").innerHTML = id;
