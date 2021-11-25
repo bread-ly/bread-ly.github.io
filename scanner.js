@@ -3,6 +3,13 @@
       
       var resulte;
 
+      const geturl = new URLSearchParams(window.location.search);
+      const scanned = geturl.get('scanned');
+     
+      if (scanned){
+        StartFilming();
+      }
+
       function StartFilming(){
         html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanError); //start filming, looking for Scansuccess and config 
       }
