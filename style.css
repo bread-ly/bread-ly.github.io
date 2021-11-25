@@ -27,7 +27,7 @@
     }
     .text3{
       font-family: sans-serif;
-      font-size: 35px;
+      font-size: 20px;
       text-align: center;
       word-wrap: break-word;
     }
@@ -45,13 +45,13 @@
       border-radius: 2px;
       text-align: center;
       padding-right: 3px;
-      width:max-content;
+      width:fit-content;
       margin: auto;
       background-color:lightgrey;
       margin-bottom: 10px;
       margin-top: 5px;
       margin-left: 5px;
-      font-size: 40px;
+      font-size: 20px;
       font-family: Arial;
       color: black;
     }
