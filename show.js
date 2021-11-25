@@ -2,8 +2,7 @@ var obj = JSON.parse(data);
 
 const geturl = new URLSearchParams(window.location.search);
 const scannedid = geturl.get('k');
-
-console.log(scannedid);
+const id = parseInt(scannedid);
 
 function ScanPage()
 {
@@ -11,8 +10,8 @@ function ScanPage()
     window.location.replace("index.html");
 }
 
-document.getElementById("id").innerHTML = scannedid;
-document.getElementById("showname").innerHTML = obj.id["id" + scannedid].name + "<br>";
-document.getElementById("showage").innerHTML = obj.id["id" + scannedid].age + "<br>";
-document.getElementById("showcity").innerHTML = obj.id["id" + scannedid].city + "<br>";
+document.getElementById("id").innerHTML = id;
+document.getElementById("showname").innerHTML = obj.id["id" + id].name + "<br>";
+document.getElementById("showage").innerHTML = obj.id["id" + id].age + "<br>";
+document.getElementById("showcity").innerHTML = obj.id["id" + id].city + "<br>";
 
