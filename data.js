@@ -1,1 +1,1 @@
-data='{"id":{"id190303":{"name":"Lukas", "age":18, "city":"Gleisdorf"}, "id5258788":{"name":"Simon", "age":18 , "city":"Mitterdorf"}}}';
+data='{"id":{"id010001":{"name":"Faltsignal Feuerwehr", "ort":"LFBA Mercedes 814"}, "id06171":{"name":"Anhaltestab", "ort":"HLF3"}}}';
