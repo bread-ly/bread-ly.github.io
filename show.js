@@ -3,7 +3,7 @@ var scanned = true;
 const geturl = new URLSearchParams(window.location.search);
 const scannedid = geturl.get('k');
 const id = (parseInt(scannedid))/randomnumber;
-
+console.log(scannedid+randomnumber)
 function ScanPage()
 {
     document.close();
