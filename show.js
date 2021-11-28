@@ -2,7 +2,9 @@ var obj = JSON.parse(data);
 var scanned = true;
 const geturl = new URLSearchParams(window.location.search);
 const scannedid = geturl.get('k');
-const id = (parseInt(scannedid))/randomnumber;
+const id = parseInt(scannedid);
+console.log(randomnumber);
+const readyid = id/randomnumber;
 console.log(scannedid);
 
 function ScanPage()
@@ -11,7 +13,7 @@ function ScanPage()
     window.location.replace("index.html?scanned="+scanned);
 }
 
-console.log(Math.floor(Math.random()*10));
+console.log(Math.floor(Math.random()*10000));
 
 document.getElementById("id").innerHTML = id;
 document.getElementById("showname").innerHTML = obj.id["id" + id].name + "<br>";
