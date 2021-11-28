@@ -7,6 +7,7 @@
       const scanned = geturl.get('scanned');
      
       randomnumber = Math.floor(Math.random()*1000);
+      console.log(randomnumber);
       
 
       if (scanned){
