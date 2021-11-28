@@ -6,6 +6,8 @@
       const geturl = new URLSearchParams(window.location.search);
       const scanned = geturl.get('scanned');
      
+      
+
       if (scanned){
         StartFilming();
       }
