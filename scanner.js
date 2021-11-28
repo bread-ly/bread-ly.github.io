@@ -14,7 +14,7 @@
       }
 
       function StartFilming(){
-        html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanError); //start filming, looking for Scansuccess and config 
+        html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess); //start filming, looking for Scansuccess and config 
       }
       
       function onScanSuccess(decodedText, decodedresult) {
