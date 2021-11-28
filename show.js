@@ -2,7 +2,9 @@ var obj = JSON.parse(data);
 const geturl = new URLSearchParams(window.location.search);
 const scannedid = geturl.get('k');
 const id = parseInt(scannedid);
+console.log(randomnumber);
 const readyid = id/randomnumber;
+console.log(randomnumber);
 
 function ScanPage()
 {
