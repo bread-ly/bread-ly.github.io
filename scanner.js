@@ -26,10 +26,6 @@
       ShowResult();
       }
 
-      function onScanError(errorMessage){
-        console.log(errorMessage);
-      }
-
       function StopFilming(){
         html5QrCode.stop().then((ignore) => { //stops the camera
         }).catch((err) => {
@@ -41,8 +37,7 @@
       function ShowResult()
       {
         document.close();
-        window.location.replace("showdata.html?k="+(resulte*1000000));
-        console.log(randomnumber);
+        window.location.replace("showdata.html?k="+(resulte*randomnumber));
       }
       
       
