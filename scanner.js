@@ -45,8 +45,8 @@
       {
         document.close();
         window.location.replace("showdata.html?k="+(resulte*GetRandomNumber()));
-        randomnumber = (resulte*GetRandomNumber())
-
+        randomnumber = (resulte*GetRandomNumber());
+        console.log(randomnumber);
       }
       
       
