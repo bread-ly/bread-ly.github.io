@@ -23,11 +23,10 @@
       
       function onScanSuccess(decodedText, decodedresult) {
       StopFilming();
-      if (decodedText != null)
-      {
-        resulte = decodedText;
-        console.log("result gespeichert");
-      }
+        if (decodedText != null)
+        {
+          resulte = decodedText;
+        }
       ShowResult();
       }
 
