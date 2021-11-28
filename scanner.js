@@ -10,6 +10,11 @@
         StartFilming();
       }
 
+      function GetRandomNumber()
+      {
+        Math.floor(Math.random()*100)
+      }
+
       function StartFilming(){
         html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanError); //start filming, looking for Scansuccess and config 
       }
@@ -39,7 +44,8 @@
       function ShowResult()
       {
         document.close();
-        window.location.replace("showdata.html?k="+resulte);
+        window.location.replace("showdata.html?k="+(resulte*GetRandomNumber()));
+        randomnumber = (resulte*GetRandomNumber())
 
       }
       
