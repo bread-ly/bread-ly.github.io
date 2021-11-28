@@ -14,7 +14,7 @@
 
       function GetRandomNumber()
       {
-        Math.floor(Math.random()*100)
+        randomnumber = Math.floor(Math.random()*100)
       }
 
       function StartFilming(){
@@ -46,7 +46,7 @@
       {
         document.close();
         window.location.replace("showdata.html?k="+(resulte*GetRandomNumber()));
-        randomnumber = (resulte*GetRandomNumber());
+        randomnumber = (resulte*randomnumber);
         console.log(randomnumber);
       }
       

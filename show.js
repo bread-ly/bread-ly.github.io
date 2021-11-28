@@ -13,8 +13,6 @@ function ScanPage()
     window.location.replace("index.html?scanned="+scanned);
 }
 
-console.log(Math.floor(Math.random()*10000));
-
 document.getElementById("id").innerHTML = id;
 document.getElementById("showname").innerHTML = obj.id["id" + id].name + "<br>";
 document.getElementById("showage").innerHTML = obj.id["id" + id].ort + "<br>";
