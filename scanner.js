@@ -6,7 +6,7 @@
       const geturl = new URLSearchParams(window.location.search);
       const scanned = geturl.get('scanned');
      
-      randomnumber = Math.floor(Math.random()*100);
+      randomnumber = Math.floor(Math.random()*1000);
       
 
       if (scanned){
@@ -41,7 +41,7 @@
       function ShowResult()
       {
         document.close();
-        window.location.replace("showdata.html?k="+(resulte*randomnumber));
+        window.location.replace("showdata.html?k="+(resulte*1000000));
         console.log(randomnumber);
       }
       
