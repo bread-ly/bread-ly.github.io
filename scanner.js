@@ -6,16 +6,12 @@
       const geturl = new URLSearchParams(window.location.search);
       const scanned = geturl.get('scanned');
      
+      randomnumber = Math.floor(Math.random()*100);
       
 
       if (scanned){
         StartFilming();
       }
-
-      
-        randomnumber = Math.floor(Math.random()*100);
-        console.log(randomnumber);
-      
 
       function StartFilming(){
         html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanError); //start filming, looking for Scansuccess and config 
@@ -45,8 +41,7 @@
       function ShowResult()
       {
         document.close();
-        window.location.replace("showdata.html?k="+resulte);
-        randomnumber = (resulte*randomnumber);
+        window.location.replace("showdata.html?k="+(resulte*randomnumber));
         console.log(randomnumber);
       }
       
