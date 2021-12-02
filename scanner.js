@@ -11,7 +11,7 @@
       }
 
       function StartFilming(){
-        html5QrCode.start({deviceId:{exact: 1}}, config, onScanSuccess); //start filming, looking for Scansuccess and config 
+        html5QrCode.start({facingMode: "environment"}, config, onScanSuccess); //start filming, looking for Scansuccess and config 
       }
       
       function onScanSuccess(decodedText, decodedresult) {
