@@ -2,8 +2,7 @@ var obj = JSON.parse(data);
 const geturl = new URLSearchParams(window.location.search);
 const scannedid = geturl.get('k');
 const id = parseInt(scannedid);
-var random = localStorage.getItem("random");
-const readyid = id;
+
 
 function ScanPage()
 {

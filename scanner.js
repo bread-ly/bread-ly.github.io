@@ -5,12 +5,7 @@
 
       const geturl = new URLSearchParams(window.location.search);
       const scanned = geturl.get('scanned');
-     
-      randomnumber = Math.floor(Math.random()*100000);
-      localStorage.setItem("random", randomnumber);
       
-      
-
       if (scanned){
         StartFilming();
       }
@@ -39,7 +34,7 @@
       function ShowResult()
       {
         document.close();
-        window.location.replace("showdata.html?k="+(resulte*randomnumber));
+        window.location.replace("showdata.html?k="+resulte);
       }
       
       
