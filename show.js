@@ -3,7 +3,7 @@ const geturl = new URLSearchParams(window.location.search);
 const scannedid = geturl.get('k');
 const id = parseInt(scannedid);
 var random = localStorage.getItem("random");
-const readyid = id/random;
+const readyid = id;
 
 function ScanPage()
 {
@@ -11,7 +11,7 @@ function ScanPage()
     window.location.replace("index.html?scanned=true");
 }
 
-document.getElementById("id").innerHTML = readyid;
-document.getElementById("showname").innerHTML = obj.id[id10001].name + "<br>";
-document.getElementById("showage").innerHTML = obj.id["id" + readyid].ort + "<br>";
+document.getElementById("id").innerHTML = id;
+document.getElementById("showname").innerHTML = obj.id["id" + id].name + "<br>";
+document.getElementById("showage").innerHTML = obj.id["id" + id].ort + "<br>";
 
