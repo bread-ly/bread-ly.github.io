@@ -12,6 +12,6 @@ function ScanPage()
 }
 
 document.getElementById("id").innerHTML = readyid;
-document.getElementById("showname").innerHTML = obj.id["id" + readyid].name + "<br>";
+document.getElementById("showname").innerHTML = obj.id[id10001].name + "<br>";
 document.getElementById("showage").innerHTML = obj.id["id" + readyid].ort + "<br>";
 
