@@ -1,1 +1,1 @@
-var data='{"id":{"id10001":{"name":"Faltsignal Feuerwehr", "ort":"LFBA Mercedes 814"}, "id6171":{"name":"Anhaltestab", "ort":"HLF3"}}}';
+data='{"id":{"id10001":{"name":"Faltsignal Feuerwehr", "ort":"LFBA Mercedes 814"}, "id6171":{"name":"Anhaltestab", "ort":"HLF3"}}}';
