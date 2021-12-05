@@ -15,13 +15,23 @@
         <h1 style="font-family: sans-serif;">Inventur-Codescanner</h1>
       </div>
       <br>
-      <div style = "margin: auto; width: fit-content;">
-      <strong class="text1">Scanned ID: "<var id ="id"></var>"</strong>
-      <br>
-      <strong class="text1">Name:</strong>
-      <div id="showname" class = "box" >Test</div>
-      <strong class="text1">Ort:</strong>
-      <div id="showage" class = "box">Test</div>
+      <div class="result">
+        <form>
+          <label for="id">Scanned ID:</label>
+          <input type="text" id="id" name="scannedid">
+        </form>
+        <form>
+          <label for="showname">Name:</label>
+          <input type="text" id="showname" name="name" readonly="readonly">
+        </form>
+        <form>
+          <label for="showlocation">Ort:</label>
+          <input type="text" id="showlocation" name="location">
+        </form>
+        <form>
+          <label for="kommentar">Kommentar</label>
+          <input type="text" id="kommentar" name="kommentar">
+        </form>
       </div>
       <div class="container1">
       <button style="background-color: lightseagreen;" class="button1" onclick="ScanPage()" >Scannen!</button>
