@@ -9,17 +9,14 @@ const config = { fps: 10, aspectRatio: 1.0, qrbox: 200};  //configuration of the
 
 function StartFilming(){
   html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess); //start filming, looking for Scansuccess and config 
-  console.log("started");
   init = "true";
 } 
 
 function onScanSuccess(decodedText, decodedresult) {
     scanned = parseInt(decodedText)
-    console.log(decodedText);
     if (init == "true"){
         init = "false";
-        group = decodedText.charAt(1);
-        console.log(group);
+        group = decodedText.charAt(0) + decodedText.charAt(1);
             for(i = 1; i < 2000; i++)
             {
                 try {
@@ -54,7 +51,6 @@ function onScanSuccess(decodedText, decodedresult) {
         if ((scanned != null && scanned != NaN) && scanneddata.indexOf("id" + scanned) < 0)
         {
             scanneddata.push("id" + scanned);
-            console.log(scanneddata);
         }
     }
     
@@ -70,18 +66,15 @@ function StopFilming(){
 }
 
 function Inventory(){
-    /*StopFilming()
+    StopFilming()
     console.log("showdata")
     realdata.forEach(element => {
         if (scanneddata.indexOf(element) > -1){
-            console.log(element);
             realdata.splice(scanneddata.indexOf(element), 1);
         }     
     });
-    console.log(realdata);*/
-    let data = ["id10001", "id10002"];
     let list = document.getElementById("myList");
-    data.forEach((item) =>{
+    realdata.forEach((item) =>{
         let li = document.createElement("li");
         li.innerText = obj.id[item].name;
         list.appendChild(li)
