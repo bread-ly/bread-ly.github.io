@@ -83,7 +83,7 @@ function Inventory(){
     let list = document.getElementById("myList");
     realdata.forEach((item) => {
         let li = document.createElement("li");
-        li.innerText = obj.id[item].name;
+        li.innerText = ("Nummer: " + item + "Name: " + obj.id[item].name);
         list.appendChild(li)
     });
     help="true";
