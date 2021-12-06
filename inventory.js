@@ -15,7 +15,7 @@ function StartFilming(){
 
 function onScanSuccess(decodedText, decodedresult) {
     scanned = parseInt(decodedText)
-    console.log("success");
+    console.log(decodedText);
     /*if (help){
         console.log("getting group")
         group = decodedText.charAt(2)+decodedText.charAt(3);
