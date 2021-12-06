@@ -71,7 +71,7 @@ function Inventory(){
     StopFilming()
     console.log(scanneddata);
     realdata.forEach(element => {
-        if (scanneddata.indexOf(element) > -1){
+        if (scanneddata.indexOf(element) >= -1){
             console.log(element);
             realdata.splice(realdata.indexOf(element), 1);
         }     
