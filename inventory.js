@@ -71,16 +71,18 @@ function StopFilming(){
 function Inventory(){
     StopFilming()
     console.log(scanneddata);
-    realdata.forEach((element) => {
+    for (var i = realdata.length - 1; i >= 0; i--)
+    {
         console.log(element);
         if (scanneddata.includes(element)){
             console.log(element);
             realdata.splice(realdata.indexOf(element), 1);
-        }     
-    });
+        }  
+    }
+    
     console.log(realdata);
     let list = document.getElementById("myList");
-    realdata.forEach((item) =>{
+    realdata.forEach((item) => {
         let li = document.createElement("li");
         li.innerText = obj.id[item].name;
         list.appendChild(li)
