@@ -27,7 +27,6 @@ function onScanSuccess(decodedText, decodedresult) {
                 switch (true){
                 case (i<10):
                     if (realdata.indexOf("id"+group+"000"+i) < 0){
-                    console.log("data" + "id"+group+"000"+i);
                     realdata.push("id"+group+"000"+i)}
                     break;
                 case (i<100):
@@ -73,9 +72,10 @@ function Inventory(){
     realdata.forEach(element => {
         if (scanneddata.indexOf(element) > -1){
             console.log(element);
-            scanneddata.splice(scanneddata.indexOf(element), 1);
+            realdata.splice(scanneddata.indexOf(element), 1);
         }     
     });
+    console.log(realdata);
     let list = document.getElementById("myList");
     scanneddata.forEach(element =>{
         let li = document.createElement("li");
