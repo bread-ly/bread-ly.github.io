@@ -77,9 +77,9 @@ function Inventory(){
     });
     console.log(realdata);
     let list = document.getElementById("myList");
-    scanneddata.forEach(element =>{
+    realdata.forEach((item) =>{
         let li = document.createElement("li");
-        li.innerText = obj.id[element].name;
+        li.innerText = obj.id[item].name;
         list.appendChild(li)
     });
 }
