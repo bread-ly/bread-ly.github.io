@@ -47,6 +47,7 @@ function onScanSuccess(decodedText, decodedresult) {
 
                 }
             }
+            console.log(realdata);
     }
     else
     {
