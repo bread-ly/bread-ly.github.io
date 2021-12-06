@@ -1,7 +1,7 @@
 var obj = JSON.parse(data);
 var init;
 var group;
-var realdata = ["id010001","id010002"];
+var realdata = [];
 var scanneddata = [];
 
 const html5QrCode = new Html5Qrcode("reader"); //create a scan-element 
@@ -47,14 +47,12 @@ function onScanSuccess(decodedText, decodedresult) {
 
                 }
             }
-            console.log(realdata);
     }
     else
     {
         if ((decodedText != null && decodedText != NaN) && !(scanneddata.includes("id"+decodedText)))
         {
             scanneddata.push("id" + decodedText);
-            console.log("scanned: " + decodedText)
         }
     }
     
@@ -70,16 +68,13 @@ function StopFilming(){
 
 function Inventory(){
     StopFilming()
-    console.log(scanneddata);
     for (var i = realdata.length - 1; i >= 0; i--)
     {
-        console.log(realdata[i]);
         if (scanneddata.includes(realdata[i])){
             realdata.splice(realdata.indexOf(realdata[i]), 1);
         }  
     }
     
-    console.log(realdata);
     let list = document.getElementById("myList");
     realdata.forEach((item) => {
         let li = document.createElement("li");
