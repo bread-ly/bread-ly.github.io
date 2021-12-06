@@ -27,22 +27,17 @@ function onScanSuccess(decodedText, decodedresult) {
                 try {
                 switch (true){
                 case (i<10):
-                    console.log("data" + "id"+group+"000"+"i");
-                    if (obj.id["id"+group+"000"+"i"].name != undefined){
-                    console.log("data" + "id"+group+"000"+"i");
-                    realdata.push("id"+group+"000"+"i")}
+                    console.log("data " + "id"+group+"000"+"i");
+                    realdata.push("id"+group+"000"+"i")
                     break;
                 case (i<100):
-                    if (obj.id["id"+group+"00"+"i"].name != undefined){
-                    realdata.push("id"+group+"00"+"i")}
+                    realdata.push("id"+group+"00"+"i")
                     break;
                 case (i<1000):
-                    if (obj.id["id"+group+"0"+"i"].name != undefined){
-                    realdata.push("id"+group+"0"+"i")}
+                    realdata.push("id"+group+"0"+"i")
                     break;
                 case (i<10000):
-                    if (obj.id["id"+group+"i"].name != undefined){
-                    realdata.push("id"+group+"i")}
+                    realdata.push("id"+group+"i")
                     break;
                 }
                 }
