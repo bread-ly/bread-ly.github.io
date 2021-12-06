@@ -83,4 +83,5 @@ function Inventory(){
         li.innerText = obj.id[item].name;
         list.appendChild(li)
     });
+    help="true";
 }
