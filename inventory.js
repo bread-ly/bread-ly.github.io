@@ -27,7 +27,7 @@ function onScanSuccess(decodedText, decodedresult) {
                 console.log(i)
                 
 
-                    switch (i){
+                    switch (true){
 
                     case (i<10):
                         console.log("bis zehn");
