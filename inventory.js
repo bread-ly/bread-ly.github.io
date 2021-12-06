@@ -50,10 +50,10 @@ function onScanSuccess(decodedText, decodedresult) {
     }
     else
     {
-        if ((decodedText != null && decodedText != NaN) && scanneddata.indexOf("id" + decodedText) < 0)
+        if ((decodedText != null && decodedText != NaN) && !(scanneddata.includes("id"+decodedText)))
         {
             scanneddata.push("id" + decodedText);
-            console.log("scanned: "+decodedText)
+            console.log("scanned: " + decodedText)
         }
     }
     
@@ -71,7 +71,7 @@ function Inventory(){
     StopFilming()
     console.log(scanneddata);
     realdata.forEach(element => {
-        if (scanneddata.indexOf(element) >= -1){
+        if (scanneddata.includes(element)){
             console.log(element);
             realdata.splice(realdata.indexOf(element), 1);
         }     
