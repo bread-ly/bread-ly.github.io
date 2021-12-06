@@ -8,6 +8,7 @@ var scanneddata = [010001, 06171];
 const html5QrCode = new Html5Qrcode("reader"); //create a scan-element 
 const config = { fps: 10, aspectRatio: 1.0, qrbox: 200};  //configuration of the camera, 10 frames per second and 1:1 ratio
 
+
 function StartFilming(){
   html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess); //start filming, looking for Scansuccess and config 
   console.log("started");
@@ -23,28 +24,31 @@ function onScanSuccess(decodedText, decodedresult) {
             for(i = 1; i<2000; i++)
             {
                 console.log(obj.id["id"+group+"i"])
-                
-                switch (i)
+
+                try{
+                    switch (i)
                 {
                     case (i<10):
-                        if(obj.id["id"+group+"000"+"i"].name != undefined){
-                        realdata.push(obj.id["id"+group+"000"+"i"])}
+                        
+                        realdata.push(obj.id["id"+group+"000"+"i"])
                         break;
                     case (i<100):
-                        if(obj.id["id"+group+"000"+"i"].name != undefined){
-                        realdata.push(obj.id["id"+group+"00"+"i"])}
+                        
+                        realdata.push(obj.id["id"+group+"00"+"i"])
                         break;
                     case (i<1000):
-                        if(obj.id["id"+group+"000"+"i"].name != undefined){
-                        realdata.push(obj.id["id"+group+"0"+"i"])}
+                        
+                        realdata.push(obj.id["id"+group+"0"+"i"])
                         break;
                     case (i<10000):
-                        if(obj.id["id"+group+"000"+"i"].name != undefined){
-                        realdata.push(obj.id["id"+group+"i"])}
+                        
+                        realdata.push(obj.id["id"+group+"i"])
                         break;
                 }
-            
-            
+                }
+                catch(error){
+                    console.log("nodata")
+                }
         }
         console.log(realdata)
         help = false;
