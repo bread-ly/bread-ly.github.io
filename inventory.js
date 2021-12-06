@@ -25,6 +25,7 @@ function onScanSuccess(decodedText, decodedresult) {
                 case (i<10):
                     obj.id["id"+group+"000"+i].name;
                     if (realdata.indexOf("id"+group+"000"+i) < 0){
+                    console.log("id"+group+"000"+i);
                     realdata.push("id"+group+"000"+i)}
                     break;
                 case (i<100):
@@ -34,6 +35,7 @@ function onScanSuccess(decodedText, decodedresult) {
                     break;
                 case (i<1000):
                     obj.id["id"+group+"0"+i].name;
+                    console.log("id"+group+"0"+i);
                     if (realdata.indexOf("id"+group+"0"+i) < 0){
                     realdata.push("id"+group+"0"+i)}
                     break;
@@ -72,9 +74,11 @@ function Inventory(){
     StopFilming()
     realdata.forEach(element => {
         if (scanneddata.indexOf(element) > -1){
+            console.log(element);
             realdata.splice(scanneddata.indexOf(element), 1);
         }     
     });
+    console.log(realdata);
     let list = document.getElementById("myList");
     realdata.forEach((item) =>{
         let li = document.createElement("li");
