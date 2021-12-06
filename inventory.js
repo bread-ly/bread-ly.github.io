@@ -20,26 +20,30 @@ function onScanSuccess(decodedText, decodedresult) {
     if (help == true){
         group = decodedText.charAt(1);
         console.log(group)
-        for(i = 1; i<2000; i++){
-
-            if(obj.id["id"+group+"i"].name != undefined)
+            for(i = 1; i<2000; i++)
             {
+                console.log(obj.id["id"+group+"i"])
+                
                 switch (i)
                 {
                     case (i<10):
-                        realdata.push(obj.id["id"+group+"000"+"i"])
+                        if(obj.id["id"+group+"000"+"i"].name != undefined){
+                        realdata.push(obj.id["id"+group+"000"+"i"])}
                         break;
                     case (i<100):
-                        realdata.push(obj.id["id"+group+"00"+"i"])
+                        if(obj.id["id"+group+"000"+"i"].name != undefined){
+                        realdata.push(obj.id["id"+group+"00"+"i"])}
                         break;
                     case (i<1000):
-                        realdata.push(obj.id["id"+group+"0"+"i"])
+                        if(obj.id["id"+group+"000"+"i"].name != undefined){
+                        realdata.push(obj.id["id"+group+"0"+"i"])}
                         break;
                     case (i<10000):
-                        realdata.push(obj.id["id"+group+"i"])
+                        if(obj.id["id"+group+"000"+"i"].name != undefined){
+                        realdata.push(obj.id["id"+group+"i"])}
                         break;
                 }
-            }
+            
             
         }
         console.log(realdata)
