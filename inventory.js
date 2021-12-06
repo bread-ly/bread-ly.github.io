@@ -23,7 +23,7 @@ function onScanSuccess(decodedText, decodedresult) {
         console.log(group)
             for(i = 1; i < 2000; i++)
             {
-                console.log(obj.id["id"+group+"000"+"i"].name)
+                console.log(obj.id["id"+group+"000"+"i"].name + "gemerkt")
 
                 try{
                     switch (i){
@@ -49,7 +49,7 @@ function onScanSuccess(decodedText, decodedresult) {
                 catch(error){
                     console.log("nodata")
                 }
-        }
+            }
         console.log(realdata)
         help = false;
     }
