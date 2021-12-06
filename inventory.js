@@ -14,10 +14,9 @@ function StartFilming(){
 } 
 
 function onScanSuccess(decodedText, decodedresult) {
-
     scanned = parseInt(decodedText)
     console.log("success");
-    if (help){
+    /*if (help){
         console.log("getting group")
         group = decodedText.charAt(2)+decodedText.charAt(3);
         for(i = 1; i<2000; i++){
@@ -52,7 +51,7 @@ function onScanSuccess(decodedText, decodedresult) {
             scanneddata.push("id" + scanned);
             console.log("pushed "+ scanned);
         }
-    }
+    }*/
     
     
 }
