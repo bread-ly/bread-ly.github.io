@@ -25,7 +25,7 @@ function onScanSuccess(decodedText, decodedresult) {
             for(i = 1; i < 2000; i++)
             {
                 console.log(i)
-                if (){
+                
 
                     switch (i){
 
@@ -45,7 +45,7 @@ function onScanSuccess(decodedText, decodedresult) {
                         console.log("bis zehntausend");
                         break;
                     }
-                }
+                
             }
         console.log(realdata)
         
