@@ -23,7 +23,6 @@ function onScanSuccess(decodedText, decodedresult) {
                 switch (true){
                 case (i<10):
                     obj.id["id"+group+"000"+i].name;
-                    console.log("id"+group+"000"+i);
                     if (realdata.indexOf("id"+group+"000"+i) < 0){
                     realdata.push("id"+group+"000"+i)}
                     break;
@@ -34,7 +33,6 @@ function onScanSuccess(decodedText, decodedresult) {
                     break;
                 case (i<1000):
                     obj.id["id"+group+"0"+i].name;
-                    console.log("id"+group+"0"+i);
                     if (realdata.indexOf("id"+group+"0"+i) < 0){
                     realdata.push("id"+group+"0"+i)}
                     break;
@@ -59,7 +57,6 @@ function onScanSuccess(decodedText, decodedresult) {
         }
     }
     
-    
 }
 
 function StopFilming(){
@@ -72,13 +69,14 @@ function StopFilming(){
 
 function Inventory(){
     StopFilming()
+    console.log(scanneddata);
     realdata.forEach(element => {
         if (scanneddata.indexOf(element) > -1){
-            console.log(element)
+            console.log(element);
             realdata.splice(scanneddata.indexOf(element), 1);
         }     
     });
-    console.log(realdata)
+    console.log(realdata);
     let list = document.getElementById("myList");
     realdata.forEach((item) =>{
         let li = document.createElement("li");
