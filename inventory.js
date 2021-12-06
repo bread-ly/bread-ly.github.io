@@ -73,10 +73,9 @@ function Inventory(){
     console.log(scanneddata);
     for (var i = realdata.length - 1; i >= 0; i--)
     {
-        console.log(element);
-        if (scanneddata.includes(element)){
-            console.log(element);
-            realdata.splice(realdata.indexOf(element), 1);
+        console.log(realdata[i]);
+        if (scanneddata.includes(realdata[i])){
+            realdata.splice(realdata.indexOf(realdata[i]), 1);
         }  
     }
     
