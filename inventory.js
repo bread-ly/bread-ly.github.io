@@ -26,8 +26,8 @@ function onScanSuccess(decodedText, decodedresult) {
                 console.log(obj.id["id"+group+"i"])
 
                 try{
-                    switch (i)
-                {
+                    switch (i){
+
                     case (i<10):
                         
                         realdata.push(obj.id["id"+group+"000"+"i"])
@@ -55,7 +55,7 @@ function onScanSuccess(decodedText, decodedresult) {
     }
     else
     {
-        if ((scanned != null && scanned != NaN) && scanneddata.indexOf(scanned) > -1)
+        if ((scanned != null && scanned != NaN) && scanneddata.indexOf(scanned) == -1)
         {
             scanneddata.push("id" + scanned);
             console.log("pushed "+ scanned);
