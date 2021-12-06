@@ -17,7 +17,7 @@ function onScanSuccess(decodedText, decodedresult) {
     scanned = parseInt(decodedText)
     console.log(decodedText);
     if (help){
-        group = decodedText.charAt(2)+decodedText.charAt(3);
+        group = decodedText.charAt(0)+decodedText.charAt(1);
         console.log(group)
         for(i = 1; i<2000; i++){
 
