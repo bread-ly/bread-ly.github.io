@@ -3,7 +3,7 @@ var help;
 var group;
 var realdata = [];
 
-var scanneddata = [010001, 06171];
+var scanneddata = [];
 
 const html5QrCode = new Html5Qrcode("reader"); //create a scan-element 
 const config = { fps: 10, aspectRatio: 1.0, qrbox: 200};  //configuration of the camera, 10 frames per second and 1:1 ratio
@@ -55,7 +55,7 @@ function onScanSuccess(decodedText, decodedresult) {
     }
     else
     {
-        if ((scanned != null && scanned != NaN) && scanneddata.indexOf(scanned) == -1)
+        if ((scanned != null && scanned != NaN) && scanneddata.indexOf(scanned) < 0)
         {
             scanneddata.push("id" + scanned);
             console.log("pushed "+ scanned);
