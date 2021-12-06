@@ -45,7 +45,6 @@ function onScanSuccess(decodedText, decodedresult) {
                 }
                 }
                 catch(error){
-                    console.log("error");
                 }
             }
         console.log(realdata);
