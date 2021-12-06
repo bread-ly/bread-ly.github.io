@@ -73,6 +73,7 @@ function Inventory(){
     console.log("showdata")
     realdata.forEach(element => {
         if (scanneddata.indexOf(element) > -1){
+            console.log(element);
             scanneddata.splice(scanneddata.indexOf(element), 1);
         }     
     });
