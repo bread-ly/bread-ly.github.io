@@ -24,7 +24,7 @@ function onScanSuccess(decodedText, decodedresult) {
         console.log(group)
             for(i = 1; i < 2000; i++)
             {
-                switch (i){
+                switch (true){
                 case (i<10):
                     realdata.push(obj.id["id"+group+"000"+"i"])
                     break;
