@@ -70,7 +70,7 @@ function StopFilming(){
 }
 
 function Inventory(){
-    StopFilming()
+    /*StopFilming()
     console.log("showdata")
     realdata.forEach(element => {
         if (scanneddata.indexOf(element) > -1){
@@ -78,9 +78,10 @@ function Inventory(){
             realdata.splice(scanneddata.indexOf(element), 1);
         }     
     });
-    console.log(realdata);
+    console.log(realdata);*/
+    let data = ["id10001", "id10002"];
     let list = document.getElementById("myList");
-    realdata.forEach((item) =>{
+    data.forEach((item) =>{
         let li = document.createElement("li");
         li.innerText = obj.id[item].name;
         list.appendChild(li)
