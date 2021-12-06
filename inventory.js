@@ -27,17 +27,21 @@ function onScanSuccess(decodedText, decodedresult) {
                 try {
                 switch (true){
                 case (i<10):
-                    console.log("data " + "id"+group+"000"+"i");
-                    realdata.push("id"+group+"000"+"i")
+                    if (realdata.indexOf("id"+group+"000"+i) < 0){
+                    console.log("data" + "id"+group+"000"+i);
+                    realdata.push("id"+group+"000"+i)}
                     break;
                 case (i<100):
-                    realdata.push("id"+group+"00"+"i")
+                    if (realdata.indexOf("id"+group+"00"+i) < 0){
+                    realdata.push("id"+group+"00"+i)}
                     break;
                 case (i<1000):
-                    realdata.push("id"+group+"0"+"i")
+                    if (realdata.indexOf("id"+group+"0"+i) < 0){
+                    realdata.push("id"+group+"0"+i)}
                     break;
                 case (i<10000):
-                    realdata.push("id"+group+"i")
+                    if (realdata.indexOf("id"+group+i) < 0){
+                    realdata.push("id"+group+i)}
                     break;
                 }
                 }
