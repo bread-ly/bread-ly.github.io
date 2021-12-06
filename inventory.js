@@ -19,11 +19,8 @@ function onScanSuccess(decodedText, decodedresult) {
         group = decodedText.charAt(0) + decodedText.charAt(1);
         console.log(group);
             for(i = 1; i < 2000; i++)
-            {
-                
+            { 
                 try {
-                    
-                    
                 switch (true){
                 case (i<10):
                     obj.id["id"+group+"000"+i].name;
