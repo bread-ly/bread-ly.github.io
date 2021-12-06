@@ -21,9 +21,9 @@ function onScanSuccess(decodedText, decodedresult) {
     if (help == true){
         group = decodedText.charAt(1);
         console.log(group)
-            for(i = 1; i<2000; i++)
+            for(i = 1; i < 2000; i++)
             {
-                console.log(obj.id["id"+group+"i"])
+                console.log(obj.id["id"+group+"000"+"i"].name)
 
                 try{
                     switch (i){
