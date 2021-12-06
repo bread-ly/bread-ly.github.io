@@ -26,22 +26,21 @@ function onScanSuccess(decodedText, decodedresult) {
             {
                 switch (true){
                 case (i<10):
-                    if (obj.id["id"+group+"000"+"i"] != undefined){
+                    if (obj.id["id"+group+"000"+"i"].name != undefined){
                     realdata.push(obj.id["id"+group+"000"+"i"])}
                     break;
                 case (i<100):
-                    if (obj.id["id"+group+"00"+"i"] != undefined){
+                    if (obj.id["id"+group+"00"+"i"].name != undefined){
                     realdata.push(obj.id["id"+group+"00"+"i"])}
                     break;
                 case (i<1000):
-                    if (obj.id["id"+group+"0"+"i"] != undefined){
+                    if (obj.id["id"+group+"0"+"i"].name != undefined){
                     realdata.push(obj.id["id"+group+"0"+"i"])}
                     break;
                 case (i<10000):
-                    if (obj.id["id"+group+"i"] != undefined){
+                    if (obj.id["id"+group+"i"].name != undefined){
                     realdata.push(obj.id["id"+group+"i"])}
                     break;
-            
                 }
             }
         console.log(realdata);
