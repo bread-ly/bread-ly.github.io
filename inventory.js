@@ -12,13 +12,13 @@ const config = { fps: 10, aspectRatio: 1.0, qrbox: 200};  //configuration of the
 function StartFilming(){
   html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess); //start filming, looking for Scansuccess and config 
   console.log("started");
-  help = true;
+  help = "true";
 } 
 
 function onScanSuccess(decodedText, decodedresult) {
     scanned = parseInt(decodedText)
     console.log(decodedText);
-    if (help == true){
+    if (help == "true"){
         group = decodedText.charAt(1);
         console.log(group)
             for(i = 1; i < 2000; i++)
@@ -51,7 +51,7 @@ function onScanSuccess(decodedText, decodedresult) {
                 }
             }
         console.log(realdata)
-        help = false;
+        help = "false";
     }
     else
     {
