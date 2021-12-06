@@ -4,9 +4,6 @@ var group;
 var realdata = [];
 
 var scanneddata = [010001, 06171];
-scanneddata.forEach(element => {
-    
-});
 
 const html5QrCode = new Html5Qrcode("reader"); //create a scan-element 
 const config = { fps: 10, aspectRatio: 1.0, qrbox: 200};  //configuration of the camera, 10 frames per second and 1:1 ratio
@@ -19,6 +16,7 @@ function onScanSuccess(decodedText, decodedresult) {
     scanned = parseInt(decodedText)
     if (help){
         group = decodedText.charAt(2)+decodedText.charAt(3);
+        console.log("got group")
         for(i = 1; i<2000; i++){
 
             if(obj.id["id"+group+"i"].name != undefined)
@@ -48,7 +46,8 @@ function onScanSuccess(decodedText, decodedresult) {
     {
         if ((scanned != null && scanned != NaN) && scanneddata.indexOf(scanned) > -1)
         {
-            scanneddata.push(scanned);
+            scanneddata.push("id" + scanned);
+            console.log("pushed "+ scanned);
         }
     }
     
@@ -62,6 +61,7 @@ function StopFilming(){
   html5QrCode.clear(); //clears the scanning area of the box
 }
 function Inventory(){
+    console.log("showdata")
     realdata.forEach(element => {
         if (scanneddata.indexOf(element) > -1){
             scanneddata.splice(scanneddata.indexOf(element), 1);
