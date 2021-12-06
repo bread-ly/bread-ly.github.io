@@ -7,7 +7,7 @@ var scanneddata = [];
 
 const html5QrCode = new Html5Qrcode("reader"); //create a scan-element 
 const config = { fps: 10, aspectRatio: 1.0, qrbox: 200};  //configuration of the camera, 10 frames per second and 1:1 ratio
-
+ 
 
 function StartFilming(){
   html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess); //start filming, looking for Scansuccess and config 
@@ -20,12 +20,14 @@ function onScanSuccess(decodedText, decodedresult) {
     console.log(decodedText);
     if (help == "true"){
         help = "false";
-        group = decodedText.charAt(1);2
-        console.log(group)
+        group = decodedText.charAt(1);
+        console.log(group);
             for(i = 1; i < 2000; i++)
             {
+                try {
                 switch (true){
                 case (i<10):
+                    console.log("data" + "id"+group+"000"+"i");
                     if (obj.id["id"+group+"000"+"i"].name != undefined){
                     console.log("data" + "id"+group+"000"+"i");
                     realdata.push("id"+group+"000"+"i")}
@@ -42,6 +44,10 @@ function onScanSuccess(decodedText, decodedresult) {
                     if (obj.id["id"+group+"i"].name != undefined){
                     realdata.push("id"+group+"i")}
                     break;
+                }
+                }
+                catch(error){
+                    console.log("error");
                 }
             }
         console.log(realdata);
