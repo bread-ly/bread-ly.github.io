@@ -1,7 +1,7 @@
 var obj = JSON.parse(data);
 var init;
 var group;
-var realdata = [];
+var realdata = ["id010001","id010002"];
 var scanneddata = [];
 
 const html5QrCode = new Html5Qrcode("reader"); //create a scan-element 
@@ -83,7 +83,7 @@ function Inventory(){
     let list = document.getElementById("myList");
     realdata.forEach((item) => {
         let li = document.createElement("li");
-        li.innerText = ("Nummer: " + item + " Name: " + obj.id[item].name);
+        li.innerText = ("Nummer: " + item + "\n" + "Name: " + obj.id[item].name);
         list.appendChild(li)
     });
     help="true";
