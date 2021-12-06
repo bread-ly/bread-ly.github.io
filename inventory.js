@@ -27,6 +27,7 @@ function onScanSuccess(decodedText, decodedresult) {
                 switch (true){
                 case (i<10):
                     if (obj.id["id"+group+"000"+"i"].name != undefined){
+                    console.log("data" + "id"+group+"000"+"i");
                     realdata.push("id"+group+"000"+"i")}
                     break;
                 case (i<100):
