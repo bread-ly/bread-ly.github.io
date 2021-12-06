@@ -17,24 +17,31 @@ function onScanSuccess(decodedText, decodedresult) {
     if (init == "true"){
         init = "false";
         group = decodedText.charAt(0) + decodedText.charAt(1);
+        console.log(group);
             for(i = 1; i < 2000; i++)
             {
+                
                 try {
-                    obj.id["id"+group+"000"+i].name;
+                    
+                    
                 switch (true){
                 case (i<10):
+                    obj.id["id"+group+"000"+i].name;
                     if (realdata.indexOf("id"+group+"000"+i) < 0){
                     realdata.push("id"+group+"000"+i)}
                     break;
                 case (i<100):
+                    obj.id["id"+group+"00"+i].name;
                     if (realdata.indexOf("id"+group+"00"+i) < 0){
                     realdata.push("id"+group+"00"+i)}
                     break;
                 case (i<1000):
+                    obj.id["id"+group+"0"+i].name;
                     if (realdata.indexOf("id"+group+"0"+i) < 0){
                     realdata.push("id"+group+"0"+i)}
                     break;
                 case (i<10000):
+                    obj.id["id"+group+i].name;
                     if (realdata.indexOf("id"+group+i) < 0){
                     realdata.push("id"+group+i)}
                     break;
