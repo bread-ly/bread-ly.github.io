@@ -25,30 +25,26 @@ function onScanSuccess(decodedText, decodedresult) {
             for(i = 1; i < 2000; i++)
             {
                 console.log(i)
+                if (){
 
-                try{
                     switch (i){
 
                     case (i<10):
-                        
-                        realdata.push(obj.id["id"+group+"000"+"i"])
+                        console.log("bis zehn");
                         break;
                     case (i<100):
                         
-                        realdata.push(obj.id["id"+group+"00"+"i"])
+                        console.log("bis hundert");
                         break;
                     case (i<1000):
                         
-                        realdata.push(obj.id["id"+group+"0"+"i"])
+                        console.log("bis tausend");
                         break;
                     case (i<10000):
                         
-                        realdata.push(obj.id["id"+group+"i"])
+                        console.log("bis zehntausend");
                         break;
-                }
-                }
-                catch(error){
-                    console.log("nodata")
+                    }
                 }
             }
         console.log(realdata)
