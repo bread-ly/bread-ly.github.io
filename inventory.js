@@ -58,7 +58,7 @@ function onScanSuccess(decodedText, decodedresult) {
         if ((scanned != null && scanned != NaN) && scanneddata.indexOf("id" + scanned) < 0)
         {
             scanneddata.push("id" + scanned);
-            console.log("pushed "+ scanned);
+            console.log(scanneddata);
         }
     }
     
