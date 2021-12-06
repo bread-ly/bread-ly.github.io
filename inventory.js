@@ -70,14 +70,13 @@ function StopFilming(){
 function Inventory(){
     StopFilming()
     console.log(scanneddata);
-    for (i = 1; i < realdata.length; i++){
-    realdata.forEach(element => {
+    realdata.forEach((element) => {
+        console.log(element);
         if (scanneddata.includes(element)){
             console.log(element);
             realdata.splice(realdata.indexOf(element), 1);
         }     
     });
-    }
     console.log(realdata);
     let list = document.getElementById("myList");
     realdata.forEach((item) =>{
@@ -88,4 +87,5 @@ function Inventory(){
     help="true";
     scanneddata=[];
     realdata=[];
+
 }
