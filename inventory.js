@@ -1,23 +1,23 @@
 var obj = JSON.parse(data);
-var help;
+var init;
 var group;
 var realdata = [];
-
 var scanneddata = [];
 
 const html5QrCode = new Html5Qrcode("reader"); //create a scan-element 
 const config = { fps: 10, aspectRatio: 1.0, qrbox: 200};  //configuration of the camera, 10 frames per second and 1:1 ratio
+
 function StartFilming(){
   html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess); //start filming, looking for Scansuccess and config 
   console.log("started");
-  help = "true";
+  init = "true";
 } 
 
 function onScanSuccess(decodedText, decodedresult) {
     scanned = parseInt(decodedText)
     console.log(decodedText);
-    if (help == "true"){
-        help = "false";
+    if (init == "true"){
+        init = "false";
         group = decodedText.charAt(1);
         console.log(group);
             for(i = 1; i < 2000; i++)
@@ -44,10 +44,10 @@ function onScanSuccess(decodedText, decodedresult) {
                 }
                 }
                 catch(error){
+
                 }
             }
         console.log(realdata);
-        
     }
     else
     {
@@ -60,6 +60,7 @@ function onScanSuccess(decodedText, decodedresult) {
     
     
 }
+
 function StopFilming(){
   html5QrCode.stop().then((ignore) => { //stops the camera
   }).catch((err) => {
@@ -67,7 +68,9 @@ function StopFilming(){
   });
   html5QrCode.clear(); //clears the scanning area of the box
 }
+
 function Inventory(){
+    StopFilming()
     console.log("showdata")
     realdata.forEach(element => {
         if (scanneddata.indexOf(element) > -1){
