@@ -15,6 +15,7 @@ function StartFilming(){
 function onScanSuccess(decodedText, decodedresult) {
     
     if (init == "true"){
+        
         init = "false";
         group = decodedText.charAt(0) + decodedText.charAt(1);
             for(i = 1; i < 2000; i++)
@@ -52,6 +53,7 @@ function onScanSuccess(decodedText, decodedresult) {
     {
         if ((decodedText != null && decodedText != NaN) && !(scanneddata.includes("id"+decodedText)))
         {
+            document.getElementById("text").innerHTML = "Gescannt: Für Datenanzeige, Ausgabe drücken!" 
             scanneddata.push("id" + decodedText);
         }
     }
