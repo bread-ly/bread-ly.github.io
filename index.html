@@ -1,57 +1,5 @@
 <!DOCTYPE html>
 <html lang="">
-  <style>
-    ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background-color: #333;
-    }
-    
-    li {
-      float: left;
-    }
-    
-    li a, .dropbtn {
-      display: inline-block;
-      color: white;
-      text-align: center;
-      padding: 14px 16px;
-      text-decoration: none;
-    }
-    
-    li a:hover, .dropdown:hover .dropbtn {
-      background-color: red;
-    }
-    
-    li.dropdown {
-      display: inline-block;
-    }
-    
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: #f9f9f9;
-      min-width: 160px;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      z-index: 1;
-    }
-    
-    .dropdown-content a {
-      color: black;
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-      text-align: left;
-    }
-    
-    .dropdown-content a:hover {background-color: #f1f1f1;}
-    
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-    </style>
   <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QR Code Scanner first tests</title>
   <script src="https://unpkg.com/html5-qrcode"></script>
@@ -59,19 +7,18 @@
   <head>
   </head>
   <body>
-      <ul>
-          <li class ="dropdown">
-            <a href="javascript:void(0)" class="dropbtn">Info</a>
-            <div class="droptdown-content">
-              <a href="index.html">Scanner</a>
-              <a href="manual.hmtml">Eingabe</a>
-            </div>
-          </li>
-          <li><a href="inventory.html">Inventur</a></li>
-      </ul>
-    
+    <script src="manualid.js"></script>
+    <div class="topnav">
+      <a href="index.html">Scanner</a>
+      <a href="inventory.html">Inventur</a>
+      <div class="search-container">
+        <input type="text" placeholder="ID-Eingeben.." name="search" id="search">
+        <button type="submit" onclick="ManualID()">Submit</button>
+      </div> 
+    </div>
     <div class="header">
       <h1 style="font-family: sans-serif;">Inventur-Codescanner</h1>
+    </div>
     </div>
     <div id="reader"></div>
     <div id="reader"></div>

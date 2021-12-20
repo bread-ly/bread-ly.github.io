@@ -36,9 +36,6 @@
         document.close();
         window.location.replace("showdata.html?k="+resulte);
       }
-      function Result(){
-        window.location.replace("showdata.html");
-      }
 
       
       
