@@ -80,6 +80,7 @@ function Inventory(){
     let list = document.getElementById("myList");
     realdata.forEach((item) => {
         let li = document.createElement("li");
+        li.outerText = ('class="inventory"')
         li.innerText = ("Nummer: " + item + "\n" + "Name: " + obj.id[item].name);
         list.appendChild(li)
     });
