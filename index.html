@@ -3,14 +3,13 @@
   <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QR Code Scanner first tests</title>
   <script src="https://unpkg.com/html5-qrcode"></script>
+  <script type="text/javascript" src="https://dl.dropboxusercontent.com/s/xmu99k1g2olgvzs/data.js"></script>
   <link rel="stylesheet" href="style.css"></link>
   <head>
   </head>
   <body>
     <script src="manualid.js"></script>
     <div class="topnav">
-      <a href="index.html">QR</a>
-      <a href="inventory.html">Inv</a>
       <div class="search-container">
         <input type="text" placeholder="ID-Eingeben.." name="search" id="search">
         <button type="submit" onclick="ManualID()">Submit</button>
@@ -22,10 +21,11 @@
     </div>
     <div id="reader"></div>
     <div id="reader"></div>
-    <script type="text/javascript" src="scanner.js"></script>
+    <ul id="myList"></ul>
+    <script src="scanner.js"></script>
     <div class="container1">
-    <button style="background-color: #f44336; margin-right: 0px;" class="button1" onclick="StopFilming()" >STOP!</button>
-    <button style="background-color: #008CBA; margin-left: 0px;" class="button1" onclick="StartFilming()">Kamera</button>
+    <button style="background-color: #f44336; margin-right: 0px;" class="button1" onclick="StartScanner()" >Scanning</button>
+    <button style="background-color: #008CBA; margin-left: 0px;" class="button1" onclick="StartInventory()">Inventory</button>
     </div> 
     <footer></footer>
   </body>
