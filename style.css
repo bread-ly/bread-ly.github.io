@@ -80,6 +80,15 @@ li.inventory {
   list-style-type:none;
 }
 
+li.notinventory {
+  border-radius: 5px;
+  background-color: lightcoral;
+  padding: 20px;
+  margin: 5px;
+  font-size: 20px;
+  list-style-type:none;
+}
+
 .topnav {
   overflow: hidden;
   background-color: #333;

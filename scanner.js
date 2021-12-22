@@ -3,6 +3,8 @@ var init;
 var group;
 var realdata = [];
 var scanneddata = [];
+var comparedata = [];
+var notrightdata = [];
 
 
 const html5QrCode = new Html5Qrcode("reader"); //create a scan-element 
@@ -86,6 +88,7 @@ function onSuccess(decodedText, decodedresult) {
               catch(error){
               }
           }
+          comparedata = realdata;
   }
   else
   {
@@ -98,16 +101,26 @@ function onSuccess(decodedText, decodedresult) {
 }
 
 function Inventory(){
-  for (var i = realdata.length - 1; i >= 0; i--)
-  {
-      if (scanneddata.includes(realdata[i])){
-          realdata.splice(realdata.indexOf(realdata[i]), 1);
-      }  
+
+  for (var i = scanneddata.length - 1; i >= 0; i--){
+      if (!(realdata.includes(scanneddata[i]))){
+        notrightdata.push(scanneddata[i]);
+        
+      }
+      if (comparedata.includes(scanneddata[i])){
+        comparedata.splice(comparedata.indexOf(scanneddata[i]), 1);
+      }
   }
   
   let list = document.getElementById("myList");
   list.innerHTML = "";
-  realdata.forEach((item) => {
+  notrightdata.forEach((itme) => {
+    let li = document.createElement("li");
+    li.classList.add("notinventory");
+    li.innerText = ("Nummer: " + item + "\n" + "Name: " +obj.id[item].name);
+    list.appendChild(li);
+  });
+  comparedata.forEach((item) => {
       let li = document.createElement("li");
       li.classList.add("inventory");
       li.innerText = ("Nummer: " + item + "\n" + "Name: " + obj.id[item].name);
