@@ -80,7 +80,9 @@ function onSuccess(decodedText, decodedresult) {
               catch(error){
               }
           }
-          comparedata = realdata;
+          realdata.forEach(element => {
+            comparedata.push(element);
+          });
   }
   else
   {
@@ -97,60 +99,23 @@ function Inventory(){
   list.innerHTML = "";
   scanneddata.forEach(item => {
     if (comparedata.includes(item)){
-      comparedata.slice(comparedata.indexOf(item), 1)
+      comparedata.splice(comparedata.indexOf(item), 1)
     }
-    else if (!(realdata.includes(item))){
-      let li = document.createElement("li");
-      li.classList.add("notinventory");
-      li.innerText = ("Nummer: " + item + "\n" + "Name: " + obj.id[item].name);
-      list.appendChild(li);
-    }
-    
-  });
-  comparedata.forEach(element=> {
-    let li = document.createElement("li");
-    li.classList.add("inventory");
-    li.innerText = ("Nummer: " + element + "\n" + "Name: " + obj.id[item].name);
-    list.appendChild(li);
-  });
-}
+    else if (!(realdata.includes(item)) && !(notrightdata.includes(item))){
 
-/*function Inventory(){
-  for (var i = scanneddata.length - 1; i >= 0; i--){
-      if (!(realdata.includes(scanneddata[i])) && !(notrightdata.includes(scanneddata[i]))){
-        notrightdata.push(scanneddata[i]);
-      }
+      notrightdata.push(item);
     }
-  for (var i = comparedata.length - 1; i >= 0; i--)
-  {
-      if (scanneddata.includes(comparedata[i])){
-        comparedata.splice(i, 1);
-      }
-  }
-  
-  let list = document.getElementById("myList");
-  list.innerHTML = "";
-
-  notrightdata.forEach((item) => {
+  });
+  notrightdata.forEach(item => {
     let li = document.createElement("li");
     li.classList.add("notinventory");
     li.innerText = ("Nummer: " + item + "\n" + "Name: " + obj.id[item].name);
     list.appendChild(li);
   });
-  comparedata.forEach((item) => {
-      let li = document.createElement("li");
-      li.classList.add("inventory");
-      li.innerText = ("Nummer: " + item + "\n" + "Name: " + obj.id[item].name);
-      list.appendChild(li);
+  comparedata.forEach(element=> {
+    let li = document.createElement("li");
+    li.classList.add("inventory");
+    li.innerText = ("Nummer: " + element + "\n" + "Name: " + obj.id[element].name);
+    list.appendChild(li);
   });
-}*/
-
-
-
-
-
-
-
-
-
-
+}
