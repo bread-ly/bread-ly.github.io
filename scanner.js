@@ -88,12 +88,35 @@ function onSuccess(decodedText, decodedresult) {
       {
           scanneddata.push("id" + decodedText);
       }
+      Inventory();
   }
-  Inventory();
 }
 
 function Inventory(){
-  for (var i = 0; i < scanneddata.length - 1; i++){
+  let list = document.getElementById("myList");
+  list.innerHTML = "";
+  scanneddata.forEach(item => {
+    if (comparedata.includes(item)){
+      comparedata.slice(comparedata.indexOf(item), 1)
+    }
+    else if (!(realdata.includes(item))){
+      let li = document.createElement("li");
+      li.classList.add("notinventory");
+      li.innerText = ("Nummer: " + item + "\n" + "Name: " + obj.id[item].name);
+      list.appendChild(li);
+    }
+    
+  });
+  comparedata.forEach(element=> {
+    let li = document.createElement("li");
+    li.classList.add("inventory");
+    li.innerText = ("Nummer: " + element + "\n" + "Name: " + obj.id[item].name);
+    list.appendChild(li);
+  });
+}
+
+/*function Inventory(){
+  for (var i = scanneddata.length - 1; i >= 0; i--){
       if (!(realdata.includes(scanneddata[i])) && !(notrightdata.includes(scanneddata[i]))){
         notrightdata.push(scanneddata[i]);
       }
@@ -120,7 +143,7 @@ function Inventory(){
       li.innerText = ("Nummer: " + item + "\n" + "Name: " + obj.id[item].name);
       list.appendChild(li);
   });
-}
+}*/
 
 
 
