@@ -11,14 +11,6 @@ const html5QrCode = new Html5Qrcode("reader"); //create a scan-element
 const config = { fps: 10, aspectRatio: 1.0, qrbox: 200};  //configuration of the camera, 10 frames per second and 1:1 ratio
 
 var resulte;
-const geturl = new URLSearchParams(window.location.search);
-const scanned = geturl.get('scanned');
-
-
-
-if (scanned){
-  StartScanner();
-}
 function StartScanner(){
 
   html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess); //start filming, looking for Scansuccess and config 
@@ -101,14 +93,15 @@ function onSuccess(decodedText, decodedresult) {
 }
 
 function Inventory(){
-
   for (var i = scanneddata.length - 1; i >= 0; i--){
       if (!(realdata.includes(scanneddata[i]))){
-        notrightdata.push(scanneddata[i]);
-        
+        notrightdata.push(scanneddata[i]);  
       }
-      if (comparedata.includes(scanneddata[i])){
-        comparedata.splice(comparedata.indexOf(scanneddata[i]), 1);
+    }
+  for (var i = comparedata.length - 1; i >= 0; i--)
+  {
+      if (scanneddata.includes(comparedata[i])){
+        comparedata.splice(i, 1);
       }
   }
   
