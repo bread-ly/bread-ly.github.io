@@ -94,7 +94,7 @@ function onSuccess(decodedText, decodedresult) {
 
 function Inventory(){
   for (var i = scanneddata.length - 1; i >= 0; i--){
-      if (!(realdata.includes(scanneddata[i]))){
+      if ((realdata.includes(scanneddata[i])) === false && !(notrightdata.includes(scanneddata[i]))){
         notrightdata.push(scanneddata[i]);  
       }
     }
