@@ -107,10 +107,11 @@ function Inventory(){
   
   let list = document.getElementById("myList");
   list.innerHTML = "";
-  notrightdata.forEach((itme) => {
+
+  notrightdata.forEach((item) => {
     let li = document.createElement("li");
     li.classList.add("notinventory");
-    li.innerText = ("Nummer: " + item + "\n" + "Name: " +obj.id[item].name);
+    li.innerText = ("Nummer: " + item + "\n" + "Name: " + obj.id[item].name);
     list.appendChild(li);
   });
   comparedata.forEach((item) => {
