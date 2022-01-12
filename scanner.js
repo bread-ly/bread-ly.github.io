@@ -1,6 +1,6 @@
-
-
-//var pdf = new jsPDF("p", "mm", "a4") //Portrait und Maßeinheit Millimeter
+const pdf = new jsPDF("p", "mm", "a4") //Portrait und Maßeinheit Millimeter
+pdf.setFont("Arial");
+pdf.setFontSize(12);
 
 var obj = JSON.parse(data);
 var init;
@@ -9,6 +9,7 @@ var realdata = [];
 var scanneddata = [];
 var comparedata = [];
 var notrightdata = [];
+var zeilenabstand = 7;
 
 const html5QrCode = new Html5Qrcode("reader"); //create a scan-element 
 const config = { fps: 10, aspectRatio: 1.0, qrbox: 200};  //configuration of the camera, 10 frames per second and 1:1 ratio
@@ -55,7 +56,15 @@ function StartInventory(){
 } 
 
 function InventoryReady(){
-
+  pdf.text("Dinge die hier nicht hergehören:", 10, zeilenabstand)
+  notrightdata.forEach(element => {
+    pdf.text("Nummer: " + element + " Name: " + obj.id[element].name, 10, zeilenabstand * (notrightdata.indexOf(element) + 2))
+  });
+  pdf.text("Dinge die fehlen:", 10, zeilenabstand + ((notrightdata.length + 1) * zeilenabstand) )
+  comparedata.forEach(element => {
+    pdf.text("Nummer: " + element + " Name: " + obj.id[element].name, 10, zeilenabstand * (comparedata.indexOf(element) + 3) + (notrightdata.length * zeilenabstand))
+  });
+  pdf.save("inventur.pdf")
 }
 
 function onSuccess(decodedText, decodedresult) {
