@@ -1,3 +1,7 @@
+
+
+//var pdf = new jsPDF("p", "mm", "a4") //Portrait und Maßeinheit Millimeter
+
 var obj = JSON.parse(data);
 var init;
 var group;
@@ -6,11 +10,14 @@ var scanneddata = [];
 var comparedata = [];
 var notrightdata = [];
 
-
 const html5QrCode = new Html5Qrcode("reader"); //create a scan-element 
 const config = { fps: 10, aspectRatio: 1.0, qrbox: 200};  //configuration of the camera, 10 frames per second and 1:1 ratio
 
 var resulte;
+
+document.getElementById("scannbutton").style.visibility = 'visible';
+document.getElementById("inventoryready").style.visibility = 'hidden';
+
 function StartScanner(){
 
   html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess); //start filming, looking for Scansuccess and config 
@@ -40,10 +47,16 @@ function ShowResult()
 }
 
 function StartInventory(){
-
+  document.getElementById("scannbutton").style.visibility = 'hidden';
+  document.getElementById("inventoryready").style.visibility = 'visible';
+  document.getElementById("inventorybutton").style.visibility = 'hidden';
   html5QrCode.start({ facingMode: "environment" }, config, onSuccess); //start filming, looking for Scansuccess and config 
   init = "true";
 } 
+
+function InventoryReady(){
+
+}
 
 function onSuccess(decodedText, decodedresult) {
     

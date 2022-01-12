@@ -7,7 +7,9 @@ body {
 }
 
 .container1{  /*container for buttons*/
-display:flex;
+  margin: auto;
+  width: 50%;
+  
 }
 
 .button1{

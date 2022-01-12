@@ -3,6 +3,7 @@
   <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QR Code Scanner first tests</title>
   <script src="https://unpkg.com/html5-qrcode"></script>
+  <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
   <script type="text/javascript" src="https://dl.dropboxusercontent.com/s/xmu99k1g2olgvzs/data.js"></script>
   <link rel="stylesheet" href="style.css"></link>
   <head>
@@ -18,15 +19,15 @@
     <div class="header">
       <h1 style="font-family: sans-serif;">Inventur-Codescanner</h1>
     </div>
-    </div>
-    <div id="reader"></div>
     <div id="reader"></div>
     <ul id="myList"></ul>
-    <script src="scanner.js"></script>
+
     <div class="container1">
-    <button style="background-color: #f44336; margin-right: 0px;" class="button1" onclick="StartScanner()" >Scanning</button>
-    <button style="background-color: #008CBA; margin-left: 0px;" class="button1" onclick="StartInventory()">Inventory</button>
+    <button id="scannbutton" style="background-color: #f44336; margin-right: 0px; " class="button1" onclick="StartScanner()" >Scanning</button>
+    <button id="inventorybutton" style="background-color: #008CBA; margin-left: 0px; " class="button1" onclick="StartInventory()">Inventory</button>
+    <button id="inventoryready" style="background-color: #f476d9; margin-right: 0px; " class="button1" onclick="InventoryReady()">Fertig</button>
     </div> 
+    <script src="scanner.js"></script>
     <footer></footer>
   </body>
 </html>
