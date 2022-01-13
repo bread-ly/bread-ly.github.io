@@ -60,9 +60,10 @@ function InventoryReady(){
   notrightdata.forEach(element => {
     pdf.text("Nummer: " + element + " Name: " + obj.id[element].name, 10, zeilenabstand * (notrightdata.indexOf(element) + 2))
   });
-  pdf.text("Dinge die fehlen:", 10, zeilenabstand + ((notrightdata.length + 1) * zeilenabstand) )
+  pdf.line( 5, ((notrightdata.length + 2) * zeilenabstand), 200, ((notrightdata.length + 2) * zeilenabstand) ,"F")
+  pdf.text("Dinge die fehlen:", 10, ((notrightdata.length + 3) * zeilenabstand) )
   comparedata.forEach(element => {
-    pdf.text("Nummer: " + element + " Name: " + obj.id[element].name, 10, zeilenabstand * (comparedata.indexOf(element) + 3) + (notrightdata.length * zeilenabstand))
+    pdf.text("Nummer: " + element + " Name: " + obj.id[element].name, 10, ((notrightdata.length + 4) * zeilenabstand) + (zeilenabstand*(comparedata.indexOf(element))))
   });
   pdf.save("inventur.pdf")
 }

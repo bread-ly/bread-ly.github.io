@@ -8,8 +8,7 @@ body {
 
 .container1{  /*container for buttons*/
   margin: auto;
-  width: 50%;
-  
+  width: fit-content;
 }
 
 .button1{
@@ -21,7 +20,8 @@ body {
   font-size: 24px;
   font-family: sans-serif;
   color: white;
-  
+  width: auto;
+ 
 }
 .text1{
   font-family: sans-serif;

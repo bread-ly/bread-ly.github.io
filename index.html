@@ -20,13 +20,17 @@
       <h1 style="font-family: sans-serif;">Inventur-Codescanner</h1>
     </div>
     <div id="reader"></div>
-    <ul id="myList"></ul>
-
+    <div style="margin:auto;">
+      <ul id="myList"></ul>
+    </div>
+    <div style="margin: auto; width:fit-content;">
+      <button id="inventoryready" style="background-color: #f476d9;" class="button1" onclick="InventoryReady()">Fertig</button>
+    </div>
     <div class="container1">
-    <button id="scannbutton" style="background-color: #f44336; margin-right: 0px; " class="button1" onclick="StartScanner()" >Scanning</button>
-    <button id="inventorybutton" style="background-color: #008CBA; margin-left: 0px; " class="button1" onclick="StartInventory()">Inventory</button>
-    <button id="inventoryready" style="background-color: #f476d9; margin-right: 0px; " class="button1" onclick="InventoryReady()">Fertig</button>
+      <button id="scannbutton" style="background-color: #f44336; margin-right: 0px; " class="button1" onclick="StartScanner()" >Scanning</button>
+      <button id="inventorybutton" style="background-color: #008CBA; margin-left: 0px; " class="button1" onclick="StartInventory()">Inventory</button>
     </div> 
+    
     <script src="scanner.js"></script>
     <footer></footer>
   </body>
