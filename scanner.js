@@ -2,7 +2,13 @@ const pdf = new jsPDF("p", "mm", "a4") //Portrait und Maßeinheit Millimeter
 pdf.setFont("Arial");
 pdf.setFontSize(12);
 
-var obj = JSON.parse(data);
+const html5QrCode = new Html5Qrcode("reader"); //create a scan-element 
+const config = { fps: 10, aspectRatio: 1.0, qrbox: 200};  //configuration of the camera, 10 frames per second and 1:1 ratio
+
+checkCookie();
+
+var obj = "";
+console.log(obj)
 var init;
 var group;
 var realdata = [];
@@ -11,16 +17,65 @@ var comparedata = [];
 var notrightdata = [];
 var zeilenabstand = 7;
 
-const html5QrCode = new Html5Qrcode("reader"); //create a scan-element 
-const config = { fps: 10, aspectRatio: 1.0, qrbox: 200};  //configuration of the camera, 10 frames per second and 1:1 ratio
+
 
 var resulte;
 
 document.getElementById("scannbutton").style.visibility = 'visible';
 document.getElementById("inventoryready").style.visibility = 'hidden';
 
-function StartScanner(){
 
+function setCookie(name, value, days){
+    const d = new Date();
+    d.setTime(d.getTime() + (days*24*60*60*1000));
+    let expires = "expires=" + d.toUTCString();
+    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+  }
+  
+  function getCookie(cname){
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i < ca.length; i++){
+        let c = ca[i];
+        while (c.charAt(0) == ' '){
+            c = c.substring(1);
+        }
+        if(c.indexOf(name) == 0){
+            return c.substring(name.length, c.length);
+        }
+    }
+    return null;
+  }
+  
+  function checkCookie(){
+    let link = getCookie("database");
+    if(link != null)
+    {
+      loadData(link);
+    }
+    else{
+      html5QrCode.start({ facingMode: "environment" }, config, onCokkieSuccess); //start filming, looking for Scansuccess and config
+    }
+  }
+  
+  function loadData(datalink){
+    var script = document.createElement('script');
+    script.onload = function() {
+      console.log("script loaded");
+      obj = JSON.parse(data);
+    }
+    script.src = datalink;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+  
+  function onCokkieSuccess(decodedText, decodedresult){
+    setCookie("database", decodedText, 90)
+    StopFilming();
+    checkCookie();
+  }
+
+function StartScanner(){
   html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess); //start filming, looking for Scansuccess and config 
 } 
 
@@ -69,9 +124,7 @@ function InventoryReady(){
 }
 
 function onSuccess(decodedText, decodedresult) {
-    
   if (init === "true"){
-      
       init = "false";
       group = decodedText.charAt(0) + decodedText.charAt(1);
           for(i = 1; i < 2000; i++)
@@ -111,7 +164,9 @@ function onSuccess(decodedText, decodedresult) {
   {
       if ((decodedText != null && decodedText != NaN) && !(scanneddata.includes("id"+decodedText)))
       {
-          scanneddata.push("id" + decodedText);
+        console.log("push")
+        scanneddata.push("id" + decodedText);
+        console.log(scanneddata);
       }
       Inventory();
   }
@@ -125,13 +180,14 @@ function Inventory(){
       comparedata.splice(comparedata.indexOf(item), 1)
     }
     else if (!(realdata.includes(item)) && !(notrightdata.includes(item))){
-
       notrightdata.push(item);
     }
   });
   notrightdata.forEach(item => {
+    console.log("add to list")
     let li = document.createElement("li");
     li.classList.add("notinventory");
+    console.log("Nummer: " + item + "\n" + "Name: " + obj.id[item].name)
     li.innerText = ("Nummer: " + item + "\n" + "Name: " + obj.id[item].name);
     list.appendChild(li);
   });
