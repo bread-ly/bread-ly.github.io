@@ -70,7 +70,7 @@ function setCookie(name, value, days){
   }
   
   function onCokkieSuccess(decodedText, decodedresult){
-    setCookie("database", decodedText, 90)
+    setCookie("database", decodedText, 1)
     StopFilming();
     checkCookie();
   }
