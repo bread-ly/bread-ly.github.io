@@ -1,142 +1,141 @@
-*{
-  box-sizing: border-box;
+* {
+    box-sizing: border-box;
 }
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
 }
 
-.container1{  /*container for buttons*/
-  margin: auto;
-  width: fit-content;
+.container1 {
+    /*container for buttons*/
+    margin: auto;
+    width: fit-content;
 }
 
-.button1{
-  margin: auto;
-  margin-bottom: 30px;
-  border-color: white;
-  padding: 20px 40px;
-  border-radius: 8px;
-  font-size: 24px;
-  font-family: sans-serif;
-  color: white;
-  width: auto;
- 
+.button1 {
+    margin: auto;
+    margin-bottom: 30px;
+    border-color: white;
+    padding: 20px 40px;
+    border-radius: 8px;
+    font-size: 24px;
+    font-family: sans-serif;
+    color: white;
+    width: auto;
 }
-.text1{
-  font-family: sans-serif;
-  font-size: 20px;
-  text-align: center;
-  word-wrap: break-word;
+.text1 {
+    font-family: sans-serif;
+    font-size: 20px;
+    text-align: center;
+    word-wrap: break-word;
 }
-.text2{
-  font-family: sans-serif;
-  font-size: 15px;
-  text-align: center;
-  word-wrap: break-word;
+.text2 {
+    font-family: sans-serif;
+    font-size: 15px;
+    text-align: center;
+    word-wrap: break-word;
 }
-.text3{
-  font-family: sans-serif;
-  font-size: 20px;
-  text-align: center;
-  word-wrap: break-word;
+.text3 {
+    font-family: sans-serif;
+    font-size: 20px;
+    text-align: center;
+    word-wrap: break-word;
 }
-.header{
-  padding: 1px;
-  text-align: center;
-  background-color: darkturquoise;
-  color: white;
-  font-size: 15px;
-} 
+.header {
+    padding: 1px;
+    text-align: center;
+    background-color: darkturquoise;
+    color: white;
+    font-size: 15px;
+}
 .header h1 {
-  font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-.output{
-  width: 100%;
-  padding: 5px;
-  display: inline-block;
-  margin: 8px 8px;
-  box-sizing: border-box;
-  border: 1px solid black;
-  border-radius: 4px;
-  font-size: 15px;
-  font-weight: bold;
-  background-color: white;
-
+.output {
+    width: 100%;
+    padding: 5px;
+    display: inline-block;
+    margin: 8px 8px;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: white;
 }
 .result {
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
-  margin: 10px;
-  font-size: 20px;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    margin: 10px;
+    font-size: 20px;
 }
 
 li.inventory {
-  border-radius: 5px;
-  background-color: #cccccc;
-  padding: 20px;
-  margin: 5px;
-  font-size: 20px;
-  list-style-type:none;
+    border-radius: 5px;
+    background-color: #cccccc;
+    padding: 20px;
+    margin: 5px;
+    font-size: 20px;
+    list-style-type: none;
 }
 
 li.notinventory {
-  border-radius: 5px;
-  background-color: lightcoral;
-  padding: 20px;
-  margin: 5px;
-  font-size: 20px;
-  list-style-type:none;
+    border-radius: 5px;
+    background-color: lightcoral;
+    padding: 20px;
+    margin: 5px;
+    font-size: 20px;
+    list-style-type: none;
 }
 
 .topnav {
-  overflow: hidden;
-  background-color: #333;
+    overflow: hidden;
+    background-color: #333;
 }
 
 .topnav a {
-  float: left;
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 15px;
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 15px;
 }
 
 .topnav a:hover {
-  background-color: #04AA6D;
-  color: white;
+    background-color: #04aa6d;
+    color: white;
 }
 
 .topnav .search-container {
-  float: right;
+    float: right;
 }
 
-.topnav input[type=text] {
-  padding: 6px;
-  padding-right: 0;
-  margin-top: 8px;
-  font-size: 15px;
-  border: none;
-  color: white;
-  background: #424242;
+.topnav input[type="text"] {
+    padding: 6px;
+    padding-right: 0;
+    margin-top: 8px;
+    font-size: 15px;
+    border: none;
+    color: white;
+    background: #424242;
 }
 
 .topnav .search-container button {
-  float: right;
-  padding: 5px 8px;
-  margin-top: 8px;
-  margin-right: 10px;
-  background: #ddd;
-  font-size: 17px;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
+    float: right;
+    padding: 5px 8px;
+    margin-top: 8px;
+    margin-right: 10px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
 }
 
 .topnav .search-container button:hover {
-  background: #ccc;
+    background: #ccc;
 }
