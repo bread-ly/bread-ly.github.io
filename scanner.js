@@ -53,7 +53,7 @@ function getCookie(cname) {
 
 function checkCookie() {
     let link = getCookie("database");
-    if (link != null && link.charAt(0) == "h" && link.charAt == "t") {
+    if (link != null && link.charAt(0) == "h" && link.charAt(1) == "t") {
         loadData(link);
         showdiv.style.height = 0;
     } else {
@@ -72,7 +72,7 @@ function loadData(datalink) {
 }
 
 function onCokkieSuccess(decodedText, decodedresult) {
-    if (decodedText.charAt(0) == "h" && decodedText.charAt == "t") {
+    if (decodedText.charAt(0) == "h" && decodedText.charAt(1) == "t") {
         showtext.innerHTML = "";
         setCookie("database", decodedText, 1);
         StopFilming();
