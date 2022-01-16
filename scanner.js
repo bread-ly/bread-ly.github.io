@@ -57,7 +57,7 @@ function checkCookie() {
         loadData(link);
         showdiv.style.height = 0;
     } else {
-        showtext.innerHTML = "Bitte initialisierung durchführen!";
+        showtext.innerHTML = "Bitte Initialisierung durchführen!";
         html5QrCode.start({ facingMode: "environment" }, config, onCokkieSuccess); //start filming, looking for Scansuccess and config
     }
 }

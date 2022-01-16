@@ -15,3 +15,8 @@ function ManualID() {
     }
     ShowResult();
 }
+
+function home() {
+    document.close();
+    window.location.replace("index.html");
+}

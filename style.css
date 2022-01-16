@@ -16,7 +16,7 @@ body {
     margin: auto;
     margin-bottom: 30px;
     border-color: white;
-    padding: 20px 40px;
+    padding: 20px 35px;
     border-radius: 8px;
     font-size: 24px;
     font-family: sans-serif;
@@ -135,9 +135,29 @@ li.notinventory {
     font-size: 17px;
     border: none;
     cursor: pointer;
-    border-radius: 4px;
 }
 
 .topnav .search-container button:hover {
     background: #ccc;
+}
+.home {
+    background: #424242;
+    float: left;
+    margin: auto;
+    padding: 10px 15px;
+    font-size: 17px;
+    color: lightgrey;
+    border: none;
+}
+.home button:hover {
+    background: green;
+}
+.homediv {
+    float: left;
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+}
+.homediv button:hover {
+    background: #424242c4;
 }
