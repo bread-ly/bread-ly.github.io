@@ -15,7 +15,6 @@ const invbutton = document.getElementById("inventorybutton");
 checkCookie();
 
 var obj = "";
-console.log(obj);
 var init;
 var group;
 var realdata = [];
@@ -66,7 +65,6 @@ function checkCookie() {
 function loadData(datalink) {
     var script = document.createElement("script");
     script.onload = function () {
-        console.log("script loaded");
         obj = JSON.parse(data);
     };
     script.src = datalink;
@@ -74,10 +72,12 @@ function loadData(datalink) {
 }
 
 function onCokkieSuccess(decodedText, decodedresult) {
-    showtext.innerHTML = "";
-    setCookie("database", decodedText, 1);
-    StopFilming();
-    checkCookie();
+    if (decodedText.charAt(0) == "h" && decodedText.charAt == "t") {
+        showtext.innerHTML = "";
+        setCookie("database", decodedText, 1);
+        StopFilming();
+        checkCookie();
+    }
 }
 
 function StartScanner() {
@@ -176,9 +176,7 @@ function onSuccess(decodedText, decodedresult) {
     } else {
         showtext.innerHTML = "Scannen:";
         if (decodedText != null && decodedText != NaN && !scanneddata.includes("id" + decodedText)) {
-            console.log("push");
             scanneddata.push("id" + decodedText);
-            console.log(scanneddata);
         }
         Inventoryresult();
     }
@@ -195,10 +193,8 @@ function Inventoryresult() {
         }
     });
     notrightdata.forEach((item) => {
-        console.log("add to list");
         let li = document.createElement("li");
         li.classList.add("notinventory");
-        console.log("Nummer: " + item + "\n" + "Name: " + obj.id[item].name);
         li.innerText = "Nummer: " + item + "\n" + "Name: " + obj.id[item].name;
         list.appendChild(li);
     });
