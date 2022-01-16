@@ -5,6 +5,13 @@ pdf.setFontSize(12);
 const html5QrCode = new Html5Qrcode("reader"); //create a scan-element
 const config = { fps: 10, aspectRatio: 1.0, qrbox: 200 }; //configuration of the camera, 10 frames per second and 1:1 ratio
 
+const showtext = document.getElementById("showtext");
+const showdiv = document.getElementById("showdiv");
+const readydiv = document.getElementById("readydiv");
+const invreadybutton = document.getElementById("inventoryready");
+const scanbutton = document.getElementById("scannbutton");
+const invbutton = document.getElementById("inventorybutton");
+
 checkCookie();
 
 var obj = "";
@@ -19,8 +26,8 @@ var zeilenabstand = 7;
 
 var resulte;
 
-document.getElementById("scannbutton").style.visibility = "visible";
-document.getElementById("inventoryready").style.visibility = "hidden";
+invreadybutton.style.visibility = "hidden";
+readydiv.style.height = 0;
 
 function setCookie(name, value, days) {
     const d = new Date();
@@ -49,7 +56,9 @@ function checkCookie() {
     let link = getCookie("database");
     if (link != null) {
         loadData(link);
+        showdiv.style.height = 0;
     } else {
+        showtext.innerHTML = "Bitte initialisierung durchführen!";
         html5QrCode.start({ facingMode: "environment" }, config, onCokkieSuccess); //start filming, looking for Scansuccess and config
     }
 }
@@ -65,6 +74,7 @@ function loadData(datalink) {
 }
 
 function onCokkieSuccess(decodedText, decodedresult) {
+    showtext.innerHTML = "";
     setCookie("database", decodedText, 1);
     StopFilming();
     checkCookie();
@@ -99,9 +109,10 @@ function ShowResult() {
 }
 
 function StartInventory() {
-    document.getElementById("scannbutton").style.visibility = "hidden";
-    document.getElementById("inventoryready").style.visibility = "visible";
-    document.getElementById("inventorybutton").style.visibility = "hidden";
+    scanbutton.style.visibility = "hidden";
+    invreadybutton.style.visibility = "visible";
+    readydiv.style.height = "fit-content";
+    invbutton.style.visibility = "hidden";
     html5QrCode.start({ facingMode: "environment" }, config, onSuccess); //start filming, looking for Scansuccess and config
     init = "true";
 }
@@ -126,6 +137,8 @@ function InventoryReady() {
 function onSuccess(decodedText, decodedresult) {
     if (init === "true") {
         init = "false";
+        showdiv.style.height = "fit-content";
+        showtext.innerHTML = "Initialisieren:";
         group = decodedText.charAt(0) + decodedText.charAt(1);
         for (i = 1; i < 2000; i++) {
             try {
@@ -161,16 +174,17 @@ function onSuccess(decodedText, decodedresult) {
             comparedata.push(element);
         });
     } else {
+        showtext.innerHTML = "Scannen:";
         if (decodedText != null && decodedText != NaN && !scanneddata.includes("id" + decodedText)) {
             console.log("push");
             scanneddata.push("id" + decodedText);
             console.log(scanneddata);
         }
-        Inventory();
+        Inventoryresult();
     }
 }
 
-function Inventory() {
+function Inventoryresult() {
     let list = document.getElementById("myList");
     list.innerHTML = "";
     scanneddata.forEach((item) => {
