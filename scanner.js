@@ -113,6 +113,7 @@ function StartInventory() {
     invreadybutton.style.visibility = "visible";
     readydiv.style.height = "fit-content";
     invbutton.style.visibility = "hidden";
+    showtext.innerHTML = "Initialisieren:";
     html5QrCode.start({ facingMode: "environment" }, config, onSuccess); //start filming, looking for Scansuccess and config
     init = "true";
 }
@@ -138,7 +139,6 @@ function onSuccess(decodedText, decodedresult) {
     if (init === "true") {
         init = "false";
         showdiv.style.height = "fit-content";
-        showtext.innerHTML = "Initialisieren:";
         group = decodedText.charAt(0) + decodedText.charAt(1);
         for (i = 1; i < 2000; i++) {
             try {
