@@ -53,7 +53,7 @@ function getCookie(cname) {
 
 function checkCookie() {
     let link = getCookie("database");
-    if (link != null) {
+    if (link != null && decodedText.charAt(0) == "h" && decodedText.charAt == "t") {
         loadData(link);
         showdiv.style.height = 0;
     } else {
