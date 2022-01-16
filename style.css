@@ -127,7 +127,7 @@ li.notinventory {
 
 .topnav .search-container button {
     float: right;
-    padding: 5px 8px;
+    padding: 5px 7px;
     margin-top: 5px;
     margin-bottom: 5px;
     margin-right: 5px;
@@ -144,7 +144,7 @@ li.notinventory {
     background: #424242;
     float: left;
     margin: auto;
-    padding: 10px 15px;
+    padding: 10px 12px;
     font-size: 17px;
     color: lightgrey;
     border: none;
@@ -159,5 +159,5 @@ li.notinventory {
     height: fit-content;
 }
 .homediv button:hover {
-    background: #424242c4;
+    background: #424242c9;
 }
