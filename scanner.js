@@ -173,6 +173,10 @@ function onSuccess(decodedText, decodedresult) {
         realdata.forEach((element) => {
             comparedata.push(element);
         });
+        if (decodedText != null && decodedText != NaN && !scanneddata.includes("id" + decodedText)) {
+            scanneddata.push("id" + decodedText);
+        }
+        Inventoryresult();
     } else {
         showtext.innerHTML = "Scannen:";
         if (decodedText != null && decodedText != NaN && !scanneddata.includes("id" + decodedText)) {
