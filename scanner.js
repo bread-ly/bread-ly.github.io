@@ -16,7 +16,6 @@ checkCookie();
 
 var obj = "";
 var init;
-var group;
 var realdata = [];
 var scanneddata = [];
 var comparedata = [];
@@ -98,7 +97,10 @@ function StopFilming() {
 
 function onScanSuccess(decodedText, decodedresult) {
     if (decodedText != null) {
-        resulte = decodedText;
+        var idfirst = decodedText.charAt(0) + decodedText.charAt(1);
+        var idlast = decodedText.charAt(2) + decodedText.charAt(3) + decodedText.charAt(4) + decodedText.charAt(5);
+        console.log(parseInt(idfirst) + "/" + parseInt(idlast));
+        resulte = parseInt(idfirst) + "/" + parseInt(idlast);
     }
     ShowResult();
 }
@@ -135,13 +137,25 @@ function InventoryReady() {
     pdf.save("inventur.pdf");
 }
 
-function SaveInventory(){
-    asdf
+function SaveInventory() {
+    asdf;
+}
 
+function getid(gr, numb) {
+    return gr + "/" + numb;
 }
 
 function onSuccess(decodedText, decodedresult) {
+    console.log(decodedText);
     if (init === "true") {
+        var group = decodedText.charAt(0) + decodedText.charAt(1);
+        parseInt(group);
+        var idlast = decodedText.charAt(2) + decodedText.charAt(3) + decodedText.charAt(4) + decodedText.charAt(5);
+        console.log(parseInt(idfirst) + "/" + parseInt(idlast));
+        resulte = parseInt(idfirst) + "/" + parseInt(idlast);
+
+        console.log(group);
+
         init = "false";
         showdiv.style.height = "fit-content";
         group = decodedText.charAt(0) + decodedText.charAt(1);
@@ -149,7 +163,8 @@ function onSuccess(decodedText, decodedresult) {
             try {
                 switch (true) {
                     case i < 10:
-                        obj.id["id" + group + "000" + i].name;
+                        obj.id[getid(group, i)].name;
+                        console.log(getid(group, i));
                         if (!realdata.includes("id" + group + "000" + i)) {
                             realdata.push("id" + group + "000" + i);
                         }
