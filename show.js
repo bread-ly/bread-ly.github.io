@@ -39,7 +39,6 @@ function ScanPage() {
 
 function output(object) {
     document.getElementById("id").innerHTML = scannedid;
-    console.log(object.id["id" + scannedid].name);
-    document.getElementById("showname").innerHTML = object.id["id" + scannedid].name + "<br>";
-    document.getElementById("showlocation").innerHTML = object.id["id" + scannedid].ort + "<br>";
+    document.getElementById("showname").innerHTML = object.id[scannedid].invName + "<br>";
+    document.getElementById("showlocation").innerHTML = object.id[scannedid].raumName + "<br>";
 }

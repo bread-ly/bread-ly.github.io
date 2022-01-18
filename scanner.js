@@ -25,6 +25,7 @@ var zeilenabstand = 7;
 var resulte;
 
 invreadybutton.style.visibility = "hidden";
+saveinventory.style.visibility = "hidden";
 readydiv.style.height = 0;
 
 function setCookie(name, value, days) {
@@ -99,8 +100,8 @@ function onScanSuccess(decodedText, decodedresult) {
     if (decodedText != null) {
         var idfirst = decodedText.charAt(0) + decodedText.charAt(1);
         var idlast = decodedText.charAt(2) + decodedText.charAt(3) + decodedText.charAt(4) + decodedText.charAt(5);
-        console.log(parseInt(idfirst) + "/" + parseInt(idlast));
-        resulte = parseInt(idfirst) + "/" + parseInt(idlast);
+        console.log(getid(parseInt(idfirst), parseInt(idlast)));
+        resulte = getid(parseInt(idfirst), parseInt(idlast));
     }
     ShowResult();
 }
@@ -123,16 +124,12 @@ function StartInventory() {
 function InventoryReady() {
     pdf.text("Dinge die hier nicht hergehören:", 10, zeilenabstand);
     notrightdata.forEach((element) => {
-        pdf.text("Nummer: " + element + " Name: " + obj.id[element].name, 10, zeilenabstand * (notrightdata.indexOf(element) + 2));
+        pdf.text("Nummer: " + element + " Name: " + obj.id[element].invName, 10, zeilenabstand * (notrightdata.indexOf(element) + 2));
     });
     pdf.line(5, (notrightdata.length + 2) * zeilenabstand, 200, (notrightdata.length + 2) * zeilenabstand, "F");
     pdf.text("Dinge die fehlen:", 10, (notrightdata.length + 3) * zeilenabstand);
     comparedata.forEach((element) => {
-        pdf.text(
-            "Nummer: " + element + " Name: " + obj.id[element].name,
-            10,
-            (notrightdata.length + 4) * zeilenabstand + zeilenabstand * comparedata.indexOf(element)
-        );
+        pdf.text("Nummer: " + element + " Name: " + obj.id[element].invName, 10, (notrightdata.length + 4) * zeilenabstand + zeilenabstand * comparedata.indexOf(element));
     });
     pdf.save("inventur.pdf");
 }
@@ -146,61 +143,42 @@ function getid(gr, numb) {
 }
 
 function onSuccess(decodedText, decodedresult) {
-    console.log(decodedText);
     if (init === "true") {
-        var group = decodedText.charAt(0) + decodedText.charAt(1);
-        parseInt(group);
-        var idlast = decodedText.charAt(2) + decodedText.charAt(3) + decodedText.charAt(4) + decodedText.charAt(5);
-        console.log(parseInt(idfirst) + "/" + parseInt(idlast));
-        resulte = parseInt(idfirst) + "/" + parseInt(idlast);
-
-        console.log(group);
-
         init = "false";
+
+        console.log(decodedText);
+        var group = decodedText.charAt(0) + decodedText.charAt(1);
+        group = parseInt(group);
+
+        var idlast = decodedText.charAt(2) + decodedText.charAt(3) + decodedText.charAt(4) + decodedText.charAt(5);
+        number = parseInt(idlast);
+
         showdiv.style.height = "fit-content";
-        group = decodedText.charAt(0) + decodedText.charAt(1);
-        for (i = 1; i < 2000; i++) {
-            try {
-                switch (true) {
-                    case i < 10:
-                        obj.id[getid(group, i)].name;
-                        console.log(getid(group, i));
-                        if (!realdata.includes("id" + group + "000" + i)) {
-                            realdata.push("id" + group + "000" + i);
+
+        var room = obj.id[getid(group, number)].raumName;
+
+        for (gr = 1; gr < 16; gr++) {
+            for (numb = 1; numb < 10000; numb++) {
+                try {
+                    if ((obj.id[getid(gr, numb)].raumName = room)) {
+                        if (!realdata.includes(getid(gr, numb))) {
+                            realdata.push(getid(gr, numb));
                         }
-                        break;
-                    case i < 100:
-                        obj.id["id" + group + "00" + i].name;
-                        if (!realdata.includes("id" + group + "00" + i)) {
-                            realdata.push("id" + group + "00" + i);
-                        }
-                        break;
-                    case i < 1000:
-                        obj.id["id" + group + "0" + i].name;
-                        if (!realdata.includes("id" + group + "0" + i)) {
-                            realdata.push("id" + group + "0" + i);
-                        }
-                        break;
-                    case i < 10000:
-                        obj.id["id" + group + i].name;
-                        if (!realdata.includes("id" + group + i)) {
-                            realdata.push("id" + group + i);
-                        }
-                        break;
-                }
-            } catch (error) {}
+                    }
+                } catch (error) {}
+            }
         }
         realdata.forEach((element) => {
             comparedata.push(element);
         });
-        if (decodedText != null && decodedText != NaN && !scanneddata.includes("id" + decodedText)) {
-            scanneddata.push("id" + decodedText);
+        if (decodedText != null && decodedText != NaN && !scanneddata.includes(getid(group, number))) {
+            scanneddata.push(getid(group, number));
         }
         Inventoryresult();
     } else {
         showtext.innerHTML = "Scannen:";
-        if (decodedText != null && decodedText != NaN && !scanneddata.includes("id" + decodedText)) {
-            scanneddata.push("id" + decodedText);
+        if (decodedText != null && decodedText != NaN && !scanneddata.includes(getid(group, number))) {
+            scanneddata.push(getid(group, number));
         }
         Inventoryresult();
     }
@@ -219,13 +197,13 @@ function Inventoryresult() {
     notrightdata.forEach((item) => {
         let li = document.createElement("li");
         li.classList.add("notinventory");
-        li.innerText = "Nummer: " + item + "\n" + "Name: " + obj.id[item].name;
+        li.innerText = "Nummer: " + item + "\n" + "Name: " + obj.id[item].invName;
         list.appendChild(li);
     });
     comparedata.forEach((element) => {
         let li = document.createElement("li");
         li.classList.add("inventory");
-        li.innerText = "Nummer: " + element + "\n" + "Name: " + obj.id[element].name;
+        li.innerText = "Nummer: " + element + "\n" + "Name: " + obj.id[element].invName;
         list.appendChild(li);
     });
 }
