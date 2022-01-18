@@ -135,6 +135,11 @@ function InventoryReady() {
     pdf.save("inventur.pdf");
 }
 
+function SaveInventory(){
+    asdf
+
+}
+
 function onSuccess(decodedText, decodedresult) {
     if (init === "true") {
         init = "false";
