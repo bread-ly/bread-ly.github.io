@@ -14,6 +14,12 @@ const invbutton = document.getElementById("inventorybutton");
 
 checkCookie();
 
+const geturl = new URLSearchParams(window.location.search);
+const scanned = geturl.get("scanned");
+if (scanned == true) {
+    StartScanner();
+}
+
 var obj = "";
 var init;
 var realdata = [];
@@ -100,7 +106,6 @@ function onScanSuccess(decodedText, decodedresult) {
     if (decodedText != null) {
         var idfirst = decodedText.charAt(0) + decodedText.charAt(1);
         var idlast = decodedText.charAt(2) + decodedText.charAt(3) + decodedText.charAt(4) + decodedText.charAt(5);
-        console.log(getid(parseInt(idfirst), parseInt(idlast)));
         resulte = getid(parseInt(idfirst), parseInt(idlast));
     }
     ShowResult();
@@ -114,6 +119,7 @@ function ShowResult() {
 function StartInventory() {
     scanbutton.style.visibility = "hidden";
     invreadybutton.style.visibility = "visible";
+    saveinventory.style.visibility = "visible";
     readydiv.style.height = "fit-content";
     invbutton.style.visibility = "hidden";
     showtext.innerHTML = "Initialisieren:";
@@ -143,24 +149,21 @@ function getid(gr, numb) {
 }
 
 function onSuccess(decodedText, decodedresult) {
+    var idfirst = decodedText.charAt(0) + decodedText.charAt(1);
+    group = parseInt(idfirst);
+
+    var idlast = decodedText.charAt(2) + decodedText.charAt(3) + decodedText.charAt(4) + decodedText.charAt(5);
+    number = parseInt(idlast);
     if (init === "true") {
         init = "false";
-
-        console.log(decodedText);
-        var group = decodedText.charAt(0) + decodedText.charAt(1);
-        group = parseInt(group);
-
-        var idlast = decodedText.charAt(2) + decodedText.charAt(3) + decodedText.charAt(4) + decodedText.charAt(5);
-        number = parseInt(idlast);
 
         showdiv.style.height = "fit-content";
 
         var room = obj.id[getid(group, number)].raumName;
-
         for (gr = 1; gr < 16; gr++) {
             for (numb = 1; numb < 10000; numb++) {
                 try {
-                    if ((obj.id[getid(gr, numb)].raumName = room)) {
+                    if (obj.id[getid(gr, numb)].raumName == room) {
                         if (!realdata.includes(getid(gr, numb))) {
                             realdata.push(getid(gr, numb));
                         }

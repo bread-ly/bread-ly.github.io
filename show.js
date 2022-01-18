@@ -25,7 +25,6 @@ function loadData(datalink) {
     var script = document.createElement("script");
     script.onload = function () {
         obj = JSON.parse(data);
-        console.log(obj);
         output(obj);
     };
     script.src = datalink;
