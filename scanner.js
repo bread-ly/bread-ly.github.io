@@ -104,6 +104,8 @@ class Cookies {
             const onsuccess = (decodedText, decodedResult) => {
                 this.setcookie(decodedText, 1);
                 cam.stopfilm();
+                showdiv.style.height = "fit-content";
+                showtext.innerHTML = "Data-Base set!";
             };
             cam.film(onsuccess);
         }
@@ -117,8 +119,6 @@ class Cookies {
             };
             script.src = cookiedata;
             document.getElementsByTagName("head")[0].appendChild(script);
-            showdiv.style.height = "fit-content";
-            showtext.innerHTML = "Data-Base set!";
         }
     }
 }
