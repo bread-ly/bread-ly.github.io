@@ -2,8 +2,8 @@ const pdf = new jsPDF("p", "mm", "a4"); //Portrait und Maßeinheit Millimeter
 pdf.setFont("Arial");
 pdf.setFontSize(12);
 
-const html5QrCode = new Html5Qrcode("reader"); //create a scan-element
-const config = { fps: 10, aspectRatio: 1.0, qrbox: 200 }; //configuration of the camera, 10 frames per second and 1:1 ratio
+const html5QrCode = new Html5Qrcode("reader");
+const conf = { fps: 10, aspectRatio: 1.0, qrbox: 200 }; //configuration of the camera, 10 frames per second and 1:1 ratio
 
 const showtext = document.getElementById("showtext");
 const showdiv = document.getElementById("showdiv");
@@ -12,120 +12,200 @@ const invreadybutton = document.getElementById("inventoryready");
 const scanbutton = document.getElementById("scannbutton");
 const invbutton = document.getElementById("inventorybutton");
 
-checkCookie();
-
-const geturl = new URLSearchParams(window.location.search);
-const scanned = geturl.get("scanned");
-if (scanned == true) {
-    StartScanner();
-}
-
-var obj = "";
-var init;
+let obj;
+let idold;
+let init = true;
 var realdata = [];
 var scanneddata = [];
 var comparedata = [];
 var notrightdata = [];
 var zeilenabstand = 7;
-
 var resulte;
 
 invreadybutton.style.visibility = "hidden";
 saveinventory.style.visibility = "hidden";
-readydiv.style.height = 0;
+readydiv.style.height = "0px";
 
-function setCookie(name, value, days) {
-    const d = new Date();
-    d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
-    let expires = "expires=" + d.toUTCString();
-    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+//-------------------Class-for-Camera-----------------------//
+
+class Camera {
+    constructor(scanner, config) {
+        this.scanner = scanner;
+        this.config = config;
+        this.ready = false;
+    }
+    film(succ) {
+        this.scanner.start({ facingMode: "environment" }, this.config, succ); //start filming, looking for Scansuccess and config
+    }
+    stopfilm() {
+        this.scanner
+            .stop()
+            .then((ignore) => {
+                //stops the camera
+            })
+            .catch((err) => {
+                // Stop failed, handle it.
+            });
+        this.scanner.clear(); //clears the scanning area of the box
+    }
+    dectxt(decodedText) {
+        this.text = decodedText;
+
+        let idfirst = decodedText.charAt(0) + decodedText.charAt(1);
+        this.group = parseInt(idfirst);
+
+        let idlast = decodedText.charAt(3) + decodedText.charAt(4) + decodedText.charAt(5) + decodedText.charAt(6);
+        this.number = parseInt(idlast);
+    }
+    getid() {
+        return this.group + "/" + this.number;
+    }
+    gettext() {
+        return this.text;
+    }
 }
 
-function getCookie(cname) {
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(";");
-    for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) == " ") {
-            c = c.substring(1);
+//---------------------Class-for-Cookie-Managment---------------------//
+
+class Cookies {
+    constructor(name) {
+        this.cookiename = name;
+    }
+    setcookie(value, days) {
+        this.cookievalue = value;
+        this.cookiedays = days;
+
+        const d = new Date();
+        d.setTime(d.getTime() + this.cookiedays * 24 * 60 * 60 * 1000);
+        let expires = "expires=" + d.toUTCString();
+        document.cookie = this.cookiename + "=" + this.cookievalue + ";" + expires + ";path=/";
+    }
+    getcookie() {
+        let mycookiename = this.cookiename + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(";");
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == " ") {
+                c = c.substring(1);
+            }
+            if (c.indexOf(mycookiename) == 0) {
+                return c.substring(mycookiename.length, c.length);
+            }
         }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
+        return null;
+    }
+    checkcookie() {
+        let cookiedata = this.getcookie();
+        if (cookiedata != null && cookiedata.charAt(0) == "h" && cookiedata.charAt(1) == "t") {
+            showdiv.style.height = 0;
+        } else {
+            showtext.innerHTML = "Bitte Initialisierung durchführen!";
+            const onsuccess = (decodedText, decodedResult) => {
+                this.setcookie(decodedText, 1);
+                cam.stopfilm();
+            };
+            cam.film(onsuccess);
         }
     }
-    return null;
-}
-
-function checkCookie() {
-    let link = getCookie("database");
-    if (link != null && link.charAt(0) == "h" && link.charAt(1) == "t") {
-        loadData(link);
-        showdiv.style.height = 0;
-    } else {
-        showtext.innerHTML = "Bitte Initialisierung durchführen!";
-        html5QrCode.start({ facingMode: "environment" }, config, onCokkieSuccess); //start filming, looking for Scansuccess and config
+    loadcookie() {
+        let cookiedata = this.getcookie();
+        if (cookiedata != null && cookiedata.charAt(0) == "h" && cookiedata.charAt(1) == "t") {
+            var script = document.createElement("script");
+            script.onload = function () {
+                obj = JSON.parse(data);
+            };
+            script.src = cookiedata;
+            document.getElementsByTagName("head")[0].appendChild(script);
+            showdiv.style.height = "fit-content";
+            showtext.innerHTML = "Data-Base set!";
+        }
     }
 }
 
-function loadData(datalink) {
-    var script = document.createElement("script");
-    script.onload = function () {
-        obj = JSON.parse(data);
+//---------------Initialize-Classes-----------------------//
+
+const cam = new Camera(html5QrCode, conf);
+
+const DataBase = new Cookies("database");
+DataBase.checkcookie();
+DataBase.loadcookie();
+
+//------------------------Scan-Button-------------------------//
+
+function Scan() {
+    const onsuccess = (decodedText, decodedResult) => {
+        if (cam.gettext() != (null || NaN)) {
+            cam.dectxt(decodedText);
+            resulte = cam.getid();
+            document.close();
+            window.location.replace("showdata.html?k=" + resulte);
+        }
     };
-    script.src = datalink;
-    document.getElementsByTagName("head")[0].appendChild(script);
+    cam.film(onsuccess);
 }
 
-function onCokkieSuccess(decodedText, decodedresult) {
-    if (decodedText.charAt(0) == "h" && decodedText.charAt(1) == "t") {
-        showtext.innerHTML = "";
-        setCookie("database", decodedText, 1);
-        StopFilming();
-        checkCookie();
-    }
+//-----------------------Inventory-Button--------------------------//
+
+function Inv() {
+    showinv();
+
+    const onsuccess = (decodedText, decodedResult) => {
+        cam.dectxt(decodedText);
+        if (init == true) {
+            init = false;
+            var room = obj.id[cam.getid()].raumName;
+            for (gr = 1; gr < 16; gr++) {
+                for (numb = 1; numb < 10000; numb++) {
+                    try {
+                        if (obj.id[getID(gr, numb)].raumName == room) {
+                            if (!realdata.includes(getID(gr, numb))) {
+                                realdata.push(getID(gr, numb));
+                            }
+                        }
+                    } catch (error) {}
+                }
+            }
+            realdata.forEach((element) => {
+                comparedata.push(element);
+            });
+            if (cam.gettext() != null && cam.gettext() != NaN && !scanneddata.includes(cam.getid())) {
+                scanneddata.push(cam.getid());
+                console.log(scanneddata);
+            }
+            Inventoryresult();
+        }
+        console.log(init);
+        if (init == false) {
+            showtext.innerHTML = "Scannen:";
+            if (cam.gettext() != null && cam.gettext() != NaN && !scanneddata.includes(cam.getid())) {
+                scanneddata.push(cam.getid());
+            }
+            Inventoryresult();
+        }
+    };
+    cam.film(onsuccess);
 }
 
-function StartScanner() {
-    html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess); //start filming, looking for Scansuccess and config
+//-------------------------------------------------//
+
+function getID(grp, numb) {
+    return grp + "/" + numb;
 }
 
-function StopFilming() {
-    html5QrCode
-        .stop()
-        .then((ignore) => {
-            //stops the camera
-        })
-        .catch((err) => {
-            // Stop failed, handle it.
-        });
-    html5QrCode.clear(); //clears the scanning area of the box
-}
+//----------------------Change-look-of-site---------------------------//
 
-function onScanSuccess(decodedText, decodedresult) {
-    if (decodedText != null) {
-        var idfirst = decodedText.charAt(0) + decodedText.charAt(1);
-        var idlast = decodedText.charAt(2) + decodedText.charAt(3) + decodedText.charAt(4) + decodedText.charAt(5);
-        resulte = getid(parseInt(idfirst), parseInt(idlast));
-    }
-    ShowResult();
-}
-
-function ShowResult() {
-    document.close();
-    window.location.replace("showdata.html?k=" + resulte);
-}
-
-function StartInventory() {
+function showinv() {
     scanbutton.style.visibility = "hidden";
     invreadybutton.style.visibility = "visible";
     saveinventory.style.visibility = "visible";
     readydiv.style.height = "fit-content";
     invbutton.style.visibility = "hidden";
     showtext.innerHTML = "Initialisieren:";
-    html5QrCode.start({ facingMode: "environment" }, config, onSuccess); //start filming, looking for Scansuccess and config
-    init = "true";
+    showdiv.style.height = "fit-content";
 }
+
+//----------------------Print-PDF---------------------------//
 
 function InventoryReady() {
     pdf.text("Dinge die hier nicht hergehören:", 10, zeilenabstand);
@@ -140,52 +220,7 @@ function InventoryReady() {
     pdf.save("inventur.pdf");
 }
 
-function SaveInventory() {
-    asdf;
-}
-
-function getid(gr, numb) {
-    return gr + "/" + numb;
-}
-
-function onSuccess(decodedText, decodedresult) {
-    var idfirst = decodedText.charAt(0) + decodedText.charAt(1);
-    group = parseInt(idfirst);
-
-    var idlast = decodedText.charAt(2) + decodedText.charAt(3) + decodedText.charAt(4) + decodedText.charAt(5);
-    number = parseInt(idlast);
-    if (init === "true") {
-        init = "false";
-
-        showdiv.style.height = "fit-content";
-
-        var room = obj.id[getid(group, number)].raumName;
-        for (gr = 1; gr < 16; gr++) {
-            for (numb = 1; numb < 10000; numb++) {
-                try {
-                    if (obj.id[getid(gr, numb)].raumName == room) {
-                        if (!realdata.includes(getid(gr, numb))) {
-                            realdata.push(getid(gr, numb));
-                        }
-                    }
-                } catch (error) {}
-            }
-        }
-        realdata.forEach((element) => {
-            comparedata.push(element);
-        });
-        if (decodedText != null && decodedText != NaN && !scanneddata.includes(getid(group, number))) {
-            scanneddata.push(getid(group, number));
-        }
-        Inventoryresult();
-    } else {
-        showtext.innerHTML = "Scannen:";
-        if (decodedText != null && decodedText != NaN && !scanneddata.includes(getid(group, number))) {
-            scanneddata.push(getid(group, number));
-        }
-        Inventoryresult();
-    }
-}
+//---------------------Show-Inventory-Live-Update----------------------------//
 
 function Inventoryresult() {
     let list = document.getElementById("myList");

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="">
-    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>QR Code Scanner first tests</title>
     <script src="https://unpkg.com/html5-qrcode"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
@@ -24,16 +24,17 @@
             <p class="text3" id="showtext"></p>
         </div>
         <div id="reader"></div>
-        <div style="margin: fit-content">
-            <ul id="myList"></ul>
-        </div>
-        <div id="readydiv" style="margin: auto; width: fit-content">
+        
+        <div id="readydiv" style="margin: auto; width: fit-content; padding-top: 1%;">
             <button id="inventoryready" style="background-color: #f476d9" class="button1" onclick="InventoryReady()">Fertig</button>
             <button id="saveinventory" style="background-color: #f476d9" class="button1" onclick="SaveInventory()">Speichern</button>
         </div>
+        <div style="margin: fit-content">
+            <ul id="myList"></ul>
+        </div>
         <div class="container1">
-            <button id="scannbutton" style="background-color: #f44336; margin-right: 0px" class="button1" onclick="StartScanner()">Scanning</button>
-            <button id="inventorybutton" style="background-color: #008cba; margin-left: 0px" class="button1" onclick="StartInventory()">
+            <button id="scannbutton" style="background-color: #f44336; margin-right: 0px" class="button1" onclick="Scan()">Scanning</button>
+            <button id="inventorybutton" style="background-color: #008cba; margin-left: 0px" class="button1" onclick="Inv()">
                 Inventory
             </button>
         </div>

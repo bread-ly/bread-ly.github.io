@@ -79,6 +79,7 @@ li.inventory {
     margin: 5px;
     font-size: 20px;
     list-style-type: none;
+    width: 100%;
 }
 
 li.notinventory {
@@ -88,6 +89,7 @@ li.notinventory {
     margin: 5px;
     font-size: 20px;
     list-style-type: none;
+    width: 100%;
 }
 
 .topnav {
