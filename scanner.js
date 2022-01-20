@@ -23,6 +23,7 @@ var comparedata = [];
 var notrightdata = [];
 var zeilenabstand = 7;
 var resulte;
+let y = zeilenabstand;
 
 invreadybutton.style.visibility = "hidden";
 saveinventory.style.visibility = "hidden";
@@ -102,13 +103,13 @@ class Cookies {
         let cookiedata = this.getcookie();
         if (cookiedata != null && cookiedata.charAt(0) == "h" && cookiedata.charAt(1) == "t") {
             showdiv.style.height = 0;
+            this.loadcookie();
         } else {
             showtext.innerHTML = "Bitte Initialisierung durchführen!";
             const onsuccess = (decodedText, decodedResult) => {
                 this.setcookie(decodedText, 1);
                 cam.stopfilm();
-                showdiv.style.height = "fit-content";
-                showtext.innerHTML = "Data-Base set!";
+                this.loadcookie();
             };
             cam.film(onsuccess);
         }
@@ -122,6 +123,9 @@ class Cookies {
             };
             script.src = cookiedata;
             document.getElementsByTagName("head")[0].appendChild(script);
+            console.log("loaded");
+            showdiv.style.height = "fit-content";
+            showtext.innerHTML = "Data-Base loaded!";
         }
     }
 }
@@ -132,7 +136,6 @@ const cam = new Camera(html5QrCode, conf);
 
 const DataBase = new Cookies("database");
 DataBase.checkcookie();
-DataBase.loadcookie();
 
 const InvScanned = new Cookies("scanneddata");
 const InvComp = new Cookies("comparedata");
@@ -216,14 +219,27 @@ function showinv() {
 //----------------------Print-PDF---------------------------//
 
 function InventoryReady() {
-    pdf.text("Dinge die hier nicht hergehören:", 10, zeilenabstand);
+    let pageheight = pdf.internal.pageSize.height;
+    pdf.text("Dinge die hier nicht hergehören:", 10, y);
     notrightdata.forEach((element) => {
-        pdf.text("Nummer: " + element + " Name: " + obj.id[element].invName, 10, zeilenabstand * (notrightdata.indexOf(element) + 2));
+        y = y + zeilenabstand;
+        if (pageheight - 14 < y) {
+            pdf.addPage();
+            y = 7;
+        }
+        pdf.text("Nummer: " + element + " Name: " + obj.id[element].invName, 10, y);
     });
-    pdf.line(5, (notrightdata.length + 2) * zeilenabstand, 200, (notrightdata.length + 2) * zeilenabstand, "F");
-    pdf.text("Dinge die fehlen:", 10, (notrightdata.length + 3) * zeilenabstand);
+    y = y + zeilenabstand;
+    pdf.line(5, y, 200, y, "F");
+    y = y + zeilenabstand;
+    pdf.text("Dinge die fehlen:", 10, y);
     comparedata.forEach((element) => {
-        pdf.text("Nummer: " + element + " Name: " + obj.id[element].invName, 10, (notrightdata.length + 4) * zeilenabstand + zeilenabstand * comparedata.indexOf(element));
+        y = y + zeilenabstand;
+        if (pageheight - 14 < y) {
+            pdf.addPage();
+            y = 7;
+        }
+        pdf.text("Nummer: " + element + " Name: " + obj.id[element].invName, 10, y);
     });
     pdf.save("inventur.pdf");
 }
