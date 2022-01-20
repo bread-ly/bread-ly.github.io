@@ -11,6 +11,8 @@ const readydiv = document.getElementById("readydiv");
 const invreadybutton = document.getElementById("inventoryready");
 const scanbutton = document.getElementById("scannbutton");
 const invbutton = document.getElementById("inventorybutton");
+const savebutton = document.getElementById("saveinventory");
+const getbutton = document.getElementById("getinventory");
 
 let obj;
 let idold;
@@ -24,6 +26,7 @@ var resulte;
 
 invreadybutton.style.visibility = "hidden";
 saveinventory.style.visibility = "hidden";
+getinventory.style.visibility = "hidden";
 readydiv.style.height = "0px";
 
 //-------------------Class-for-Camera-----------------------//
@@ -131,6 +134,10 @@ const DataBase = new Cookies("database");
 DataBase.checkcookie();
 DataBase.loadcookie();
 
+const InvScanned = new Cookies("scanneddata");
+const InvComp = new Cookies("comparedata");
+const InvReal = new Cookies("realdata");
+
 //------------------------Scan-Button-------------------------//
 
 function Scan() {
@@ -199,10 +206,11 @@ function showinv() {
     scanbutton.style.visibility = "hidden";
     invreadybutton.style.visibility = "visible";
     saveinventory.style.visibility = "visible";
+    getinventory.style.visibility = "visible";
     readydiv.style.height = "fit-content";
     invbutton.style.visibility = "hidden";
-    showtext.innerHTML = "Initialisieren:";
-    showdiv.style.height = "fit-content";
+    showdiv.style.height = "0px";
+    showdiv.style.visibility = "hidden";
 }
 
 //----------------------Print-PDF---------------------------//
@@ -218,6 +226,26 @@ function InventoryReady() {
         pdf.text("Nummer: " + element + " Name: " + obj.id[element].invName, 10, (notrightdata.length + 4) * zeilenabstand + zeilenabstand * comparedata.indexOf(element));
     });
     pdf.save("inventur.pdf");
+}
+
+//---------------------Save-Inventory-Data-in-Cookie----------------------------//
+
+function SaveInventory() {
+    InvScanned.setcookie(scanneddata, 90);
+    InvComp.setcookie(comparedata, 90);
+    InvReal.setcookie(realdata, 90);
+}
+
+//---------------------Get-Inventory-Data----------------------------//
+
+function GetInventory() {
+    console.log(InvComp.getcookie());
+    scanneddata = InvScanned.getcookie().split(",");
+    comparedata = InvComp.getcookie().split(",");
+    realdata = InvReal.getcookie().split(",");
+    Inventoryresult();
+    Inv();
+    console.log(scanneddata);
 }
 
 //---------------------Show-Inventory-Live-Update----------------------------//
