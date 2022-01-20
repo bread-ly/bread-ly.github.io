@@ -21,6 +21,9 @@ var zeilenabstand = 7;
 var resulte;
 let y = zeilenabstand;
 
+const now = new Date();
+let date = now.getDate() + "." + (now.getMonth() + 1) + "." + now.getFullYear();
+
 invreadybutton.style.visibility = "hidden";
 saveinventory.style.visibility = "hidden";
 getinventory.style.visibility = "hidden";
@@ -119,39 +122,52 @@ class Cookies {
             };
             script.src = cookiedata;
             document.getElementsByTagName("head")[0].appendChild(script);
-            console.log("loaded");
             showdiv.style.height = "fit-content";
-            showtext.innerHTML = "Data-Base loaded!";
+            showtext.innerHTML = "Datenbank geladen!";
         }
     }
 }
 
 class PDF {
-    constructor(x, columnspace) {
+    constructor(x, columnspace, organisation) {
         this.pdf = new jsPDF("p", "mm", "a4"); //Portrait und Maßeinheit Millimeter
         this.pdf.setFont("Arial");
         this.pdf.setFontSize(12);
-        this.pageheight = pdf.internal.pageSize.height;
+        this.pageheight = this.pdf.internal.pageSize.height;
+        this.pagewidth = this.pdf.internal.pageSize.width;
         this.space = columnspace;
         this.xc = x;
-        this.yc;
+        this.pdfnum = 1;
+        this.headerspace = 21;
+        this.yc = columnspace + this.headerspace;
+        this.org = organisation;
+        this.date = date;
+        this.Header();
+    }
+    Header() {
+        this.pdf.text(this.org, 10, this.headerspace / 2 + 5);
+        this.pdf.text("Inventur", this.pagewidth / 2 - 10, this.headerspace / 2 + 5);
+        this.pdf.text(this.date, this.pagewidth - this.date.length * 3, this.headerspace / 2 + 5);
     }
     checkforheight() {
-        if (this.pageheight - 14 < this.space) {
+        if (this.pageheight - 14 < this.yc) {
             this.pdf.addPage();
-            this.space = 14;
+            this.Header();
+            this.yc = 14 + this.headerspace;
         }
     }
     Write(text) {
         this.checkforheight();
-        pdf.text(text, this.xc, this.space);
+        this.pdf.text(text, this.xc, this.yc);
         this.yc = this.yc + this.space;
     }
     Line() {
-        pdf.line(5, this.yc, 200, this.yc, "F");
+        this.pdf.line(5, this.yc - 2, 200, this.yc - 2, "F");
+        this.yc = this.yc + this.space;
     }
     Save(name) {
-        pdf.save(name);
+        this.pdf.save(name + this.pdfnum + ".pdf");
+        this.pdfnum += 1;
     }
 }
 
@@ -166,7 +182,7 @@ const InvScanned = new Cookies("scanneddata");
 const InvComp = new Cookies("comparedata");
 const InvReal = new Cookies("realdata");
 
-const pdf = new PDF(10, 7);
+const pdf = new PDF(20, 7, "FF Hohenkogl");
 
 //------------------------Scan-Button-------------------------//
 
@@ -208,11 +224,9 @@ function Inv() {
             });
             if (cam.gettext() != null && cam.gettext() != NaN && !scanneddata.includes(cam.getid())) {
                 scanneddata.push(cam.getid());
-                console.log(scanneddata);
             }
             Inventoryresult();
         }
-        console.log(init);
         if (init == false) {
             showtext.innerHTML = "Scannen:";
             if (cam.gettext() != null && cam.gettext() != NaN && !scanneddata.includes(cam.getid())) {
@@ -246,17 +260,21 @@ function showinv() {
 //----------------------Print-PDF---------------------------//
 
 function InventoryReady() {
-    PDF.Write("Dinge die hier nicht hergehören:");
-
-    notrightdata.forEach((element) => {
-        PDF.Write("Nummer: " + element + " Name: " + obj.id[element].invName);
-    });
-    PDF.Line();
-    PDF.Write("Nicht vorhanden:");
-    comparedata.forEach((element) => {
-        PDF.Write("Nummer: " + element + " Name: " + obj.id[element].invName);
-    });
-    PDF.save("inventur.pdf");
+    if (notrightdata.length != 0) {
+        pdf.Write("Dinge die hier nicht sein sollten:");
+        notrightdata.forEach((element) => {
+            pdf.Write("Nummer: " + element + " Name: " + obj.id[element].invName);
+        });
+        pdf.Line();
+    }
+    if (comparedata.length != 0) {
+        pdf.Write("Nicht eingescannt:");
+        pdf.Line();
+        comparedata.forEach((element) => {
+            pdf.Write("Nummer: " + element + " Name: " + obj.id[element].invName);
+        });
+    }
+    pdf.Save("Inventur");
 }
 
 //---------------------Save-Inventory-Data-in-Cookie----------------------------//
@@ -270,13 +288,11 @@ function SaveInventory() {
 //---------------------Get-Inventory-Data----------------------------//
 
 function GetInventory() {
-    console.log(InvComp.getcookie());
     scanneddata = InvScanned.getcookie().split(",");
     comparedata = InvComp.getcookie().split(",");
     realdata = InvReal.getcookie().split(",");
     Inventoryresult();
     Inv();
-    console.log(scanneddata);
 }
 
 //---------------------Show-Inventory-Live-Update----------------------------//
