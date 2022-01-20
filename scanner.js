@@ -1,7 +1,3 @@
-const pdf = new jsPDF("p", "mm", "a4"); //Portrait und Maßeinheit Millimeter
-pdf.setFont("Arial");
-pdf.setFontSize(12);
-
 const html5QrCode = new Html5Qrcode("reader");
 const conf = { fps: 10, aspectRatio: 1.0, qrbox: 200 }; //configuration of the camera, 10 frames per second and 1:1 ratio
 
@@ -130,6 +126,35 @@ class Cookies {
     }
 }
 
+class PDF {
+    constructor(x, columnspace) {
+        this.pdf = new jsPDF("p", "mm", "a4"); //Portrait und Maßeinheit Millimeter
+        this.pdf.setFont("Arial");
+        this.pdf.setFontSize(12);
+        this.pageheight = pdf.internal.pageSize.height;
+        this.space = columnspace;
+        this.xc = x;
+        this.yc;
+    }
+    checkforheight() {
+        if (this.pageheight - 14 < this.space) {
+            this.pdf.addPage();
+            this.space = 14;
+        }
+    }
+    Write(text) {
+        this.checkforheight();
+        pdf.text(text, this.xc, this.space);
+        this.yc = this.yc + this.space;
+    }
+    Line() {
+        pdf.line(5, this.yc, 200, this.yc, "F");
+    }
+    Save(name) {
+        pdf.save(name);
+    }
+}
+
 //---------------Initialize-Classes-----------------------//
 
 const cam = new Camera(html5QrCode, conf);
@@ -140,6 +165,8 @@ DataBase.checkcookie();
 const InvScanned = new Cookies("scanneddata");
 const InvComp = new Cookies("comparedata");
 const InvReal = new Cookies("realdata");
+
+const pdf = new PDF(10, 7);
 
 //------------------------Scan-Button-------------------------//
 
@@ -219,29 +246,17 @@ function showinv() {
 //----------------------Print-PDF---------------------------//
 
 function InventoryReady() {
-    let pageheight = pdf.internal.pageSize.height;
-    pdf.text("Dinge die hier nicht hergehören:", 10, y);
+    PDF.Write("Dinge die hier nicht hergehören:");
+
     notrightdata.forEach((element) => {
-        y = y + zeilenabstand;
-        if (pageheight - 14 < y) {
-            pdf.addPage();
-            y = 7;
-        }
-        pdf.text("Nummer: " + element + " Name: " + obj.id[element].invName, 10, y);
+        PDF.Write("Nummer: " + element + " Name: " + obj.id[element].invName);
     });
-    y = y + zeilenabstand;
-    pdf.line(5, y, 200, y, "F");
-    y = y + zeilenabstand;
-    pdf.text("Dinge die fehlen:", 10, y);
+    PDF.Line();
+    PDF.Write("Nicht vorhanden:");
     comparedata.forEach((element) => {
-        y = y + zeilenabstand;
-        if (pageheight - 14 < y) {
-            pdf.addPage();
-            y = 7;
-        }
-        pdf.text("Nummer: " + element + " Name: " + obj.id[element].invName, 10, y);
+        PDF.Write("Nummer: " + element + " Name: " + obj.id[element].invName);
     });
-    pdf.save("inventur.pdf");
+    PDF.save("inventur.pdf");
 }
 
 //---------------------Save-Inventory-Data-in-Cookie----------------------------//
