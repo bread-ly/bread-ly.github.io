@@ -10,12 +10,12 @@ date = '{"id":{"4/1":{"Name":"sample1"...},"4/2":{"Name":"sample2"...}}}';
 This file is initialized by scanning a QR-code with the link to the it.
 # Insctruction/Initialization
 For setting the name of the cookie with the database-link. Change the string in the Object creation.
-const DataBase = new Cookies("cookiename");
+const DataBase = new Cookies(cookiename);
 
 After setting the cookie for the database-link, there are created 3 cookie objects that are used to save the scanned Data when doing an inventory.
-const InvScanned = new Cookies("scanneddata");
-const InvComp = new Cookies("comparedata");
-const InvReal = new Cookies("realdata");
+const InvScanned = new Cookies(scanneddata);
+const InvComp = new Cookies(comparedata);
+const InvReal = new Cookies(realdata);
 The string that is given, is only the name of the cookie.
 
 Create PDF:
