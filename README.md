@@ -9,7 +9,7 @@ For the Data File we use JSONp whit the following format.
 
 date = '{"id":{"4/1":{"Name":"sample1"...},"4/2":{"Name":"sample2"...}}}';
 
-This file is initialized by scanning a QR-code with the link to the it.
+This file is initialized by scanning a QR-code with the link to the raw file.
 # Insctruction/Initialization
 For setting the name of the cookie with the database-link. Change the string in the Object creation.
 const DataBase = new Cookies(cookiename);
