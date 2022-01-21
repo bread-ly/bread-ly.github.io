@@ -6,7 +6,9 @@ The Website uses the https://github.com/mebjas/html5-qrcode Barcode Reader, it h
 It is also using the https://github.com/parallax/jsPDF PDF Creation tool for JavaScript.
 # Data-file
 For the Data File we use JSONp whit the following format.
+
 date = '{"id":{"4/1":{"Name":"sample1"...},"4/2":{"Name":"sample2"...}}}';
+
 This file is initialized by scanning a QR-code with the link to the it.
 # Insctruction/Initialization
 For setting the name of the cookie with the database-link. Change the string in the Object creation.
