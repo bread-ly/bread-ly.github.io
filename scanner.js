@@ -305,6 +305,7 @@ function GetInventory() {
     scanneddata = InvScanned.getcookie().split(",");
     comparedata = InvComp.getcookie().split(",");
     realdata = InvReal.getcookie().split(",");
+    init = false;
     Inventoryresult();
     Inv();
 }
