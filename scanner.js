@@ -4,6 +4,7 @@ const conf = { fps: 10, aspectRatio: 1.0, qrbox: 200 }; //configuration of the c
 const showtext = document.getElementById("showtext");
 const showdiv = document.getElementById("showdiv");
 const readydiv = document.getElementById("readydiv");
+const loaddiv = document.getElementById("loaddiv");
 const invreadybutton = document.getElementById("inventoryready");
 const scanbutton = document.getElementById("scannbutton");
 const invbutton = document.getElementById("inventorybutton");
@@ -28,6 +29,7 @@ invreadybutton.style.visibility = "hidden";
 saveinventory.style.visibility = "hidden";
 getinventory.style.visibility = "hidden";
 readydiv.style.height = "0px";
+loaddiv.style.height = "0px";
 
 //-------------------Class-for-Camera-----------------------//
 
@@ -187,6 +189,11 @@ const pdf = new PDF(20, 7, "FF Hohenkogl");
 //------------------------Scan-Button-------------------------//
 
 function Scan() {
+    try {
+        cam.stopfilm();
+    } catch {}
+    showdiv.style.height = "fit-content";
+    showtext.innerHTML = "Bitte einen Barcode Scannen";
     const onsuccess = (decodedText, decodedResult) => {
         if (cam.gettext() != (null || NaN)) {
             cam.dectxt(decodedText);
@@ -198,10 +205,14 @@ function Scan() {
     cam.film(onsuccess);
 }
 
-//-----------------------Inventory-Button--------------------------//
+//-----------------------Inventory--------------------------//
 
 function Inv() {
+    try {
+        cam.stopfilm();
+    } catch {}
     showinv();
+    showdiv.style.height = "fit-content";
 
     const onsuccess = (decodedText, decodedResult) => {
         cam.dectxt(decodedText);
@@ -225,10 +236,9 @@ function Inv() {
             if (cam.gettext() != null && cam.gettext() != NaN && !scanneddata.includes(cam.getid())) {
                 scanneddata.push(cam.getid());
             }
+            showtext.innerHTML = "Zur Inventur weitere Barcodes Scannen!";
             Inventoryresult();
-        }
-        if (init == false) {
-            showtext.innerHTML = "Scannen:";
+        } else if (init == false) {
             if (cam.gettext() != null && cam.gettext() != NaN && !scanneddata.includes(cam.getid())) {
                 scanneddata.push(cam.getid());
             }
@@ -236,6 +246,9 @@ function Inv() {
         }
     };
     cam.film(onsuccess);
+    if (init == true) {
+        showtext.innerHTML = "Bitte mit einem Barcode Initialisieren!";
+    }
 }
 
 //-------------------------------------------------//
@@ -252,9 +265,8 @@ function showinv() {
     saveinventory.style.visibility = "visible";
     getinventory.style.visibility = "visible";
     readydiv.style.height = "fit-content";
+    loaddiv.style.height = "fit-content";
     invbutton.style.visibility = "hidden";
-    showdiv.style.height = "0px";
-    showdiv.style.visibility = "hidden";
 }
 
 //----------------------Print-PDF---------------------------//
@@ -280,6 +292,7 @@ function InventoryReady() {
 //---------------------Save-Inventory-Data-in-Cookie----------------------------//
 
 function SaveInventory() {
+    showtext.innerHTML = "Daten für 90 Tage gespeichert!";
     InvScanned.setcookie(scanneddata, 90);
     InvComp.setcookie(comparedata, 90);
     InvReal.setcookie(realdata, 90);
@@ -288,6 +301,7 @@ function SaveInventory() {
 //---------------------Get-Inventory-Data----------------------------//
 
 function GetInventory() {
+    showtext.innerHTML = "Daten geladen! \n Zum fortfahren Barcode Scannen!";
     scanneddata = InvScanned.getcookie().split(",");
     comparedata = InvComp.getcookie().split(",");
     realdata = InvReal.getcookie().split(",");
