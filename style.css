@@ -31,6 +31,8 @@ body {
     font-family: sans-serif;
     color: white;
     width: auto;
+    background-color: rgb(70, 70, 70);
+    border-color: rgb(90, 90, 90)
 }
 .text1 {
     font-family: sans-serif;
