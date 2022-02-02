@@ -198,6 +198,7 @@ function Scan() {
         if (cam.gettext() != (null || NaN)) {
             cam.dectxt(decodedText);
             resulte = cam.getid();
+            cam.stopfilm();
             document.close();
             window.location.replace("showdata.html?k=" + resulte);
         }
