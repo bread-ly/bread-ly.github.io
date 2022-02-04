@@ -238,13 +238,12 @@ function Inv() {
                 scanneddata.push(cam.getid());
             }
             showtext.innerHTML = "Zur Inventur weitere Barcodes Scannen!";
-            Inventoryresult();
         } else if (init == false) {
             if (cam.gettext() != null && cam.gettext() != NaN && !scanneddata.includes(cam.getid())) {
                 scanneddata.push(cam.getid());
             }
-            Inventoryresult();
         }
+        Inventoryresult();
     };
     cam.film(onsuccess);
     if (init == true) {
