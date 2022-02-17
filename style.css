@@ -103,10 +103,11 @@ li.notinventory {
     border-radius: 5px;
     background-color: lightcoral;
     padding: 20px;
-    margin: 5px;
+    margin: auto;
+    margin-bottom: 5px;
     font-size: 20px;
     list-style-type: none;
-    width: 100%;
+    width: 90%;
 }
 
 .topnav {
