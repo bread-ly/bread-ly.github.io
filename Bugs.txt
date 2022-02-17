@@ -1,4 +1,6 @@
 fixed--Drucken zu PDF umbenennen
+Neu Initialisieren einfügen
+Inventur anzeigen größe fixen.
 fixed--Side scrolling und Zoomen unterbinden
 fixed--Bei gesacanntem code nur zur seite weiterleiten nicht noch einmal scannen
 fixed--Button design

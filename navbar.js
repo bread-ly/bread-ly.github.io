@@ -1,6 +1,7 @@
 var inputtext;
 var resulte;
 
+
 function ShowResult() {
     //Funktion um einen Link weiterzugeben welcher die ID enthält
     document.close(); //Aktuelles HTML-Dokument schließen
@@ -12,17 +13,23 @@ function ManualID() {
     decodedText = document.getElementById("search").value; //Aus dem Element search wird die ID genommen und wenn sie nicht null ist in die Variable resulte gespeichert
     if (decodedText != null) {
 
-        text = decodedText;
+        if(decodedText.charAt(0) == "/")
+        {
+            window.location.replace("index.html?k=" + decodedText);
+        }
+        else{
 
-        let idfirst = decodedText.charAt(0) + decodedText.charAt(1);
-        group = parseInt(idfirst);
+            let idfirst = decodedText.charAt(0) + decodedText.charAt(1);
+            group = parseInt(idfirst);
 
-        let idlast = decodedText.charAt(3) + decodedText.charAt(4) + decodedText.charAt(5) + decodedText.charAt(6);
-        number = parseInt(idlast);
+            let idlast = decodedText.charAt(3) + decodedText.charAt(4) + decodedText.charAt(5) + decodedText.charAt(6);
+            number = parseInt(idlast);
 
-        resulte = group + "/" + number;
+            resulte = group + "/" + number;
+            ShowResult();
+        }
     }
-    ShowResult();
+    
 }
 
 function home() {
