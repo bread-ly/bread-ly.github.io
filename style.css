@@ -89,6 +89,7 @@ html, body{
 }
 
 li.inventory {
+    width: max-content;
     border-radius: 5px;
     background-color: #cccccc;
     padding: 20px;
@@ -100,6 +101,7 @@ li.inventory {
 }
 
 li.notinventory {
+    width: max-content;
     border-radius: 5px;
     background-color: lightcoral;
     padding: 20px;

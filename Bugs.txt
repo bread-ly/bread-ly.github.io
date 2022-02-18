@@ -5,5 +5,5 @@ fixed--Bei gesacanntem code nur zur seite weiterleiten nicht noch einmal scannen
 fixed--Button design
 fixed--Bei manueller id 0 einbauen
 fixed--Inventur Liste verschwindet einfach
-Inventur anzeigen größe fixen.
+fixed--Inventur anzeigen größe fixen.
 Bei Inventur Manuelle ID eingeben.
