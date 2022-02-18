@@ -271,10 +271,12 @@ function showinv() {
 function InventoryReady() {
     pdf.Write("Inventur in Raum: " + room);
     pdf.Line();
+    
     if (notrightdata.length != 0) {
         pdf.Write("Dinge die hier nicht sein sollten:");
         notrightdata.forEach((element) => {
-            pdf.Write("Nummer: " + element + " Name: " + obj.id[element].invName);
+            var comp = obj.filter(obj=> obj.id === element)
+            pdf.Write("Nummer: " + comp[0].id + " Name: " + comp[0].invName);
         });
         pdf.Line();
     }
@@ -282,7 +284,8 @@ function InventoryReady() {
         pdf.Write("Nicht eingescannt:");
         pdf.Line();
         comparedata.forEach((element) => {
-            pdf.Write("Nummer: " + element + " Name: " + obj.id[element].invName);
+            var comp = obj.filter(obj=> obj.id === element)
+            pdf.Write("Nummer: " + comp[0].id + " Name: " + comp[0].invName);
         });
     }
     pdf.Save("Inventur-" + room);
@@ -292,15 +295,28 @@ function InventoryReady() {
 
 function SaveInventory() {
     showtext.innerHTML = "Daten für 90 Tage gespeichert!";
+    var cookiecomp = [];
+    var cookiereal = [];
+    comparedata.forEach(element => {
+        cookiecomp.push(element.id);
+    })
+    realdata.forEach(element => {
+        cookiereal.push(element.id); 
+    });
+    console.log(cookiecomp)
+    console.log(cookiereal)
+
+
     InvScanned.setcookie(scanneddata, 90);
-    InvComp.setcookie(comparedata, 90);
-    InvReal.setcookie(realdata, 90);
+    InvComp.setcookie(cookiecomp, 90);
+    InvReal.setcookie(cookiereal, 90);
 }
 
 //---------------------Get-Inventory-Data----------------------------//
 
 function GetInventory() {
     showtext.innerHTML = "Daten geladen! \n" + room;
+
     scanneddata = InvScanned.getcookie().split(",");
     comparedata = InvComp.getcookie().split(",");
     realdata = InvReal.getcookie().split(",");
