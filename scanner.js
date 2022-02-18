@@ -14,6 +14,7 @@ const getbutton = document.getElementById("getinventory");
 let obj;
 let idold;
 let init = true;
+let room;
 var realdata = [];
 var scanneddata = [];
 var comparedata = [];
@@ -37,9 +38,10 @@ class Camera {
     constructor(scanner, config) {
         this.scanner = scanner;
         this.config = config;
+        this.ready = false;
     }
-    film(success) {
-        this.scanner.start({ facingMode: "environment" }, this.config, success); //start filming, looking for Scansuccess and config
+    film(succ) {
+        this.scanner.start({ facingMode: "environment" }, this.config, succ); //start filming, looking for Scansuccess and config
     }
     stopfilm() {
         this.scanner
@@ -227,7 +229,7 @@ function Inv() {
         cam.dectxt(decodedText);
         if (init == true) {
             init = false;
-            var room = obj.id[cam.getid()].raumName;
+            room = obj.id[cam.getid()].raumName;
             for (gr = 1; gr < 16; gr++) {
                 for (numb = 1; numb < 10000; numb++) {
                     try {
@@ -245,13 +247,15 @@ function Inv() {
             if (cam.gettext() != null && cam.gettext() != NaN && !scanneddata.includes(cam.getid())) {
                 scanneddata.push(cam.getid());
             }
-            showtext.innerHTML = "Zur Inventur weitere Barcodes Scannen!";
+            showtext.innerHTML = "Raum: " + room;
+            Inventoryresult();
         } else if (init == false) {
             if (cam.gettext() != null && cam.gettext() != NaN && !scanneddata.includes(cam.getid())) {
                 scanneddata.push(cam.getid());
             }
+            console.log("ready");
+            Inventoryresult();
         }
-        Inventoryresult();
     };
     cam.film(onsuccess);
     if (init == true) {
@@ -280,6 +284,8 @@ function showinv() {
 //----------------------Print-PDF---------------------------//
 
 function InventoryReady() {
+    pdf.Write("Inventur in Raum: " + room);
+    pdf.Line();
     if (notrightdata.length != 0) {
         pdf.Write("Dinge die hier nicht sein sollten:");
         notrightdata.forEach((element) => {
@@ -294,7 +300,7 @@ function InventoryReady() {
             pdf.Write("Nummer: " + element + " Name: " + obj.id[element].invName);
         });
     }
-    pdf.Save("Inventur");
+    pdf.Save("Inventur-" + room);
 }
 
 //---------------------Save-Inventory-Data-in-Cookie----------------------------//
@@ -309,7 +315,7 @@ function SaveInventory() {
 //---------------------Get-Inventory-Data----------------------------//
 
 function GetInventory() {
-    showtext.innerHTML = "Daten geladen! \n Zum fortfahren Barcode Scannen!";
+    showtext.innerHTML = "Daten geladen! \n" + room;
     scanneddata = InvScanned.getcookie().split(",");
     comparedata = InvComp.getcookie().split(",");
     realdata = InvReal.getcookie().split(",");
@@ -342,4 +348,5 @@ function Inventoryresult() {
         li.innerText = "Nummer: " + element + "\n" + "Name: " + obj.id[element].invName;
         list.appendChild(li);
     });
+    a
 }
