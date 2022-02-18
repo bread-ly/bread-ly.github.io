@@ -60,11 +60,12 @@ class Camera {
         let idfirst = decodedText.charAt(0) + decodedText.charAt(1);
         this.group = parseInt(idfirst);
 
-        let idlast = decodedText.charAt(3) + decodedText.charAt(4) + decodedText.charAt(5) + decodedText.charAt(6);
+        let idlast = decodedText.charAt(2) + decodedText.charAt(3) + decodedText.charAt(4) + decodedText.charAt(5);
         this.number = parseInt(idlast);
     }
     getid() {
         return this.group + "/" + this.number;
+
     }
     gettext() {
         return this.text;
@@ -230,33 +231,15 @@ function Inv() {
         if (init == true) {
             init = false;
             scanneddata.push(cam.getid());
+            var dat = obj.filter(obj=> obj.id === cam.getid())
+            room = dat[0].raumName;
+            console.log(cam.getid())
 
-            room = "Garage";
-
-            realdata = obj.filter(obj=> obj.raumName === 'Garage')
-
+            realdata = obj.filter(obj=> obj.raumName === room)
             realdata.forEach((element) => {
                 comparedata.push(element);
             });
-
-            /*for (gr = 1; gr < 16; gr++) {
-                for (numb = 1; numb < 10000; numb++) {
-                    try {
-                        if (obj.id[getID(gr, numb)].raumName == room) {
-                            if (!realdata.includes(getID(gr, numb))) {
-                                realdata.push(getID(gr, numb));
-                            }
-                        }
-                    } catch (error) {}
-                }
-            }
-            realdata.forEach((element) => {
-                comparedata.push(element);
-            });
-            if (cam.gettext() != null && cam.gettext() != NaN && !scanneddata.includes(cam.getid())) {
-                scanneddata.push(cam.getid());
-            }*/
-            showtext.innerHTML = "Raum: " + room ;
+            showtext.innerHTML = "Raum: " + room;
             Inventoryresult();
         } else if (init == false) {
             if (cam.gettext() != null && cam.gettext() != NaN && !scanneddata.includes(cam.getid())) {
@@ -269,12 +252,6 @@ function Inv() {
     if (init == true) {
         showtext.innerHTML = "Bitte mit einem Barcode Initialisieren!";
     }
-}
-
-//-------------------------------------------------//
-
-function getID(grp, numb) {
-    return grp + "/" + numb;
 }
 
 //----------------------Change-look-of-site---------------------------//
@@ -360,4 +337,4 @@ function Inventoryresult() {
         li.innerText = "Nummer: " + element.id + "\n" + "Name: " + element.invName;
         list.appendChild(li);
     });
-}
+} 
