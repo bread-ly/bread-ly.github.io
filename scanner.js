@@ -256,7 +256,7 @@ function Inv() {
             if (cam.gettext() != null && cam.gettext() != NaN && !scanneddata.includes(cam.getid())) {
                 scanneddata.push(cam.getid());
             }*/
-            showtext.innerHTML = "Zur Inventur weitere Barcodes Scannen!";
+            showtext.innerHTML = "Raum: " + room ;
             Inventoryresult();
         } else if (init == false) {
             if (cam.gettext() != null && cam.gettext() != NaN && !scanneddata.includes(cam.getid())) {
