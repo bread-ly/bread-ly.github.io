@@ -10,7 +10,7 @@
     "orientation": "portrait",
     "icons": [
         {
-            "src": "Brot.jpg",
+            "src": "Brot.png",
             "sizes": "1024x1024"
         }
     ]
