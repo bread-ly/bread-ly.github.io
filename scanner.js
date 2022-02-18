@@ -247,7 +247,7 @@ function Inv() {
             if (cam.gettext() != null && cam.gettext() != NaN && !scanneddata.includes(cam.getid())) {
                 scanneddata.push(cam.getid());
             }
-            showtext.innerHTML = "Raum: " + room;
+            showtext.innerHTML = "Zur Inventur weitere Barcodes Scannen!";
             Inventoryresult();
         } else if (init == false) {
             if (cam.gettext() != null && cam.gettext() != NaN && !scanneddata.includes(cam.getid())) {
@@ -348,5 +348,4 @@ function Inventoryresult() {
         li.innerText = "Nummer: " + element + "\n" + "Name: " + obj.id[element].invName;
         list.appendChild(li);
     });
-    a
 }
