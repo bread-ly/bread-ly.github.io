@@ -121,7 +121,7 @@ class Cookies {
         if (cookiedata != null && cookiedata.charAt(0) == "h" && cookiedata.charAt(1) == "t") {
             var script = document.createElement("script");
             script.onload = function () {
-                obj = JSON.parse(data);
+                obj = JSON.parse(datasas);
             };
             script.src = cookiedata;
             document.getElementsByTagName("head")[0].appendChild(script);
@@ -229,8 +229,17 @@ function Inv() {
         cam.dectxt(decodedText);
         if (init == true) {
             init = false;
-            room = obj.id[cam.getid()].raumName;
-            for (gr = 1; gr < 16; gr++) {
+            scanneddata.push(cam.getid());
+
+            room = "Garage";
+
+            realdata = obj.filter(obj=> obj.raumName === 'Garage')
+
+            realdata.forEach((element) => {
+                comparedata.push(element);
+            });
+
+            /*for (gr = 1; gr < 16; gr++) {
                 for (numb = 1; numb < 10000; numb++) {
                     try {
                         if (obj.id[getID(gr, numb)].raumName == room) {
@@ -246,14 +255,13 @@ function Inv() {
             });
             if (cam.gettext() != null && cam.gettext() != NaN && !scanneddata.includes(cam.getid())) {
                 scanneddata.push(cam.getid());
-            }
+            }*/
             showtext.innerHTML = "Zur Inventur weitere Barcodes Scannen!";
             Inventoryresult();
         } else if (init == false) {
             if (cam.gettext() != null && cam.gettext() != NaN && !scanneddata.includes(cam.getid())) {
                 scanneddata.push(cam.getid());
             }
-            console.log("ready");
             Inventoryresult();
         }
     };
@@ -329,23 +337,27 @@ function GetInventory() {
 function Inventoryresult() {
     let list = document.getElementById("myList");
     list.innerHTML = "";
+
     scanneddata.forEach((item) => {
-        if (comparedata.includes(item)) {
-            comparedata.splice(comparedata.indexOf(item), 1);
-        } else if (!realdata.includes(item) && !notrightdata.includes(item)) {
-            notrightdata.push(item);
+        var resultel = obj.filter(obj=> obj.id === item)
+        if (comparedata.includes(resultel[0])) {
+            comparedata.splice(comparedata.indexOf(resultel[0]), 1);
+        } else if (!realdata.includes(resultel[0]) && !notrightdata.includes(resultel[0])) {
+            notrightdata.push(resultel[0]);
+            console.log(notrightdata)
         }
+        
     });
     notrightdata.forEach((item) => {
         let li = document.createElement("li");
         li.classList.add("notinventory");
-        li.innerText = "Nummer: " + item + "\n" + "Name: " + obj.id[item].invName;
+        li.innerText = "Nummer: " + item.id + "\n" + "Name: " + item.invName;
         list.appendChild(li);
     });
     comparedata.forEach((element) => {
         let li = document.createElement("li");
         li.classList.add("inventory");
-        li.innerText = "Nummer: " + element + "\n" + "Name: " + obj.id[element].invName;
+        li.innerText = "Nummer: " + element.id + "\n" + "Name: " + element.invName;
         list.appendChild(li);
     });
 }
