@@ -8,3 +8,4 @@ fixed--Inventur Liste verschwindet einfach
 fixed--Inventur anzeigen größe fixen.
 Bei Inventur Manuelle ID eingeben.
 Baujahr einfügen
+evtl. Taschenlampe
