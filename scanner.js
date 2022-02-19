@@ -233,9 +233,13 @@ function Inv() {
             scanneddata.push(cam.getid());
             var dat = obj.filter(obj=> obj.id === cam.getid())
             room = dat[0].raumName;
-            console.log(cam.getid())
 
             realdata = obj.filter(obj=> obj.raumName === room)
+
+            realdata.forEach(element => {
+                realdata[realdata.indexOf(element)] = element.id 
+            });
+
             realdata.forEach((element) => {
                 comparedata.push(element);
             });
@@ -303,23 +307,29 @@ function SaveInventory() {
     realdata.forEach(element => {
         cookiereal.push(element.id); 
     });
-    console.log(cookiecomp)
-    console.log(cookiereal)
 
+    localStorage.setItem('scanned', scanneddata);
+    localStorage.setItem('compare', cookiecomp);
+    localStorage.setItem('real', cookiereal);
 
-    InvScanned.setcookie(scanneddata, 90);
+    /*InvScanned.setcookie(scanneddata, 90);
     InvComp.setcookie(cookiecomp, 90);
-    InvReal.setcookie(cookiereal, 90);
+    InvReal.setcookie(cookiereal, 90);*/
 }
 
 //---------------------Get-Inventory-Data----------------------------//
 
 function GetInventory() {
+
+    scanneddata = localStorage.getItem('scanned').split(",");
+    comparedata = localStorage.getItem('compare').split(",");
+    realdata = localStorage.getItem('real').split(",");
+
+    var dat = obj.filter(obj=> obj.id === scanneddata[0])
+    room = dat[0].raumName
+
     showtext.innerHTML = "Daten geladen! \n" + room;
 
-    scanneddata = InvScanned.getcookie().split(",");
-    comparedata = InvComp.getcookie().split(",");
-    realdata = InvReal.getcookie().split(",");
     init = false;
     Inventoryresult();
     Inv();
@@ -335,22 +345,23 @@ function Inventoryresult() {
         var resultel = obj.filter(obj=> obj.id === item)
         if (comparedata.includes(resultel[0])) {
             comparedata.splice(comparedata.indexOf(resultel[0]), 1);
-        } else if (!realdata.includes(resultel[0]) && !notrightdata.includes(resultel[0])) {
-            notrightdata.push(resultel[0]);
-            console.log(notrightdata)
+        } else if (!realdata.includes(resultel[0]) && !notrightdata.includes(resultel[0].id)) {
+            notrightdata.push(resultel[0].id);
         }
         
     });
     notrightdata.forEach((item) => {
+        var resultel = obj.filter(obj=> obj.id === item)
         let li = document.createElement("li");
         li.classList.add("notinventory");
-        li.innerText = "Nummer: " + item.id + "\n" + "Name: " + item.invName;
+        li.innerText = "Nummer: " + resultel[0].id + "\n" + "Name: " + resultel[0].invName;
         list.appendChild(li);
     });
     comparedata.forEach((element) => {
+        var resultel = obj.filter(obj=> obj.id === element)
         let li = document.createElement("li");
         li.classList.add("inventory");
-        li.innerText = "Nummer: " + element.id + "\n" + "Name: " + element.invName;
+        li.innerText = "Nummer: " + resultel[0].id + "\n" + "Name: " + resultel[0].invName;
         list.appendChild(li);
     });
 } 
