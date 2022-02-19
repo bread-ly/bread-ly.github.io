@@ -37,19 +37,16 @@ function ScanPage() {
 }
 
 function output(object) {
-    if( object.id == scannedid){
-        document.getElementById("showname").innerHTML = object.invName + "<br>";
-    }
 
-    var resultel = obj.filter(obj=> obj.id === scannedid)
-    console.log(resultel[0].raumName)
+    var data = object.filter(object=> object.id === scannedid)
+    console.log(data[0].raumName)
 
     document.getElementById("id").innerHTML = scannedid;
-    /*document.getElementById("showname").innerHTML = object.id[scannedid].invName + "<br>";
-    document.getElementById("showlocation").innerHTML = object.id[scannedid].raumName + "<br>";
-    document.getElementById("memberid").innerHTML = object.id[scannedid].mitNr + "<br>";
-    document.getElementById("memberfirst").innerHTML = object.id[scannedid].mitVorname + "<br>";
-    document.getElementById("membersecond").innerHTML = object.id[scannedid].mitNachname + "<br>";
-    document.getElementById("auditable").innerHTML = object.id[scannedid].invPrüfPflichtig + "<br>";
-    document.getElementById("buildat").innerHTML = object.id[scannedid].invBaujahr + "<br>";*/
+    document.getElementById("showname").innerHTML = data[0].invName + "<br>";
+    document.getElementById("showlocation").innerHTML = data[0].raumName + "<br>";
+    document.getElementById("memberid").innerHTML = data[0].mitNr + "<br>";
+    document.getElementById("memberfirst").innerHTML = data[0].mitVorname + "<br>";
+    document.getElementById("membersecond").innerHTML = data[0].mitNachname + "<br>";
+    document.getElementById("auditable").innerHTML = data[0].invPrüfPflichtig + "<br>";
+    document.getElementById("buildat").innerHTML = data[0].invBaujahr + "<br>";
 }

@@ -303,10 +303,6 @@ function SaveInventory() {
     localStorage.setItem('scanned', scanneddata);
     localStorage.setItem('compare', comparedata);
     localStorage.setItem('real', realdata);
-
-    /*InvScanned.setcookie(scanneddata, 90);
-    InvComp.setcookie(cookiecomp, 90);
-    InvReal.setcookie(cookiereal, 90);*/
 }
 
 //---------------------Get-Inventory-Data----------------------------//
