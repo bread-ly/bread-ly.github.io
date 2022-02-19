@@ -298,19 +298,11 @@ function InventoryReady() {
 //---------------------Save-Inventory-Data-in-Cookie----------------------------//
 
 function SaveInventory() {
-    showtext.innerHTML = "Daten für 90 Tage gespeichert!";
-    var cookiecomp = [];
-    var cookiereal = [];
-    comparedata.forEach(element => {
-        cookiecomp.push(element.id);
-    })
-    realdata.forEach(element => {
-        cookiereal.push(element.id); 
-    });
+    showtext.innerHTML = "Daten gespeichert!";
 
     localStorage.setItem('scanned', scanneddata);
-    localStorage.setItem('compare', cookiecomp);
-    localStorage.setItem('real', cookiereal);
+    localStorage.setItem('compare', comparedata);
+    localStorage.setItem('real', realdata);
 
     /*InvScanned.setcookie(scanneddata, 90);
     InvComp.setcookie(cookiecomp, 90);
@@ -345,7 +337,7 @@ function Inventoryresult() {
         var resultel = obj.filter(obj=> obj.id === item)
         if (comparedata.includes(resultel[0])) {
             comparedata.splice(comparedata.indexOf(resultel[0]), 1);
-        } else if (!realdata.includes(resultel[0]) && !notrightdata.includes(resultel[0].id)) {
+        } else if (!realdata.includes(resultel[0].id) && !notrightdata.includes(resultel[0].id)) {
             notrightdata.push(resultel[0].id);
         }
         
