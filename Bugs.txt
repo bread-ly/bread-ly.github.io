@@ -6,6 +6,6 @@ fixed--Button design
 fixed--Bei manueller id 0 einbauen
 fixed--Inventur Liste verschwindet einfach
 fixed--Inventur anzeigen größe fixen.
-Bei Inventur Manuelle ID eingeben.
+fixed--Bei Inventur Manuelle ID eingeben.
 Baujahr einfügen
 evtl. Taschenlampe
