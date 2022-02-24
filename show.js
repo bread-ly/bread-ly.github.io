@@ -1,6 +1,6 @@
 var databaselink = getCookie("database");
-loadData('Datensatz.js');
-var obj = "";
+loadData(databaselink);
+let obj;
 
 const geturl = new URLSearchParams(window.location.search);
 const scannedid = geturl.get("k");
@@ -24,22 +24,16 @@ function getCookie(cname) {
 function loadData(datalink) {
     var script = document.createElement("script");
     script.onload = function () {
-        obj = JSON.parse(datasas);
+        obj = JSON.parse(data);
         output(obj);
     };
     script.src = datalink;
     document.getElementsByTagName("head")[0].appendChild(script);
 }
 
-function ScanPage() {
-    document.close();
-    window.location.replace("index.html?scanned=true");
-}
-
 function output(object) {
 
-    var data = object.filter(object=> object.id === scannedid)
-    console.log(data[0].raumName)
+    var data = object.filter(object=> object.invInvNummer === scannedid)
 
     document.getElementById("id").innerHTML = scannedid;
     document.getElementById("showname").innerHTML = data[0].invName + "<br>";

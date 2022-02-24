@@ -10,6 +10,8 @@ const scanbutton = document.getElementById("scannbutton");
 const invbutton = document.getElementById("inventorybutton");
 const savebutton = document.getElementById("saveinventory");
 const getbutton = document.getElementById("getinventory");
+const searchbar = document.getElementsByName("search")[0];
+const gobutton = document.getElementById("go");
 
 let obj;
 let idold;
@@ -65,10 +67,6 @@ class Camera {
     }
     getid() {
         return this.group + "/" + this.number;
-
-    }
-    gettext() {
-        return this.text;
     }
 }
 
@@ -106,14 +104,14 @@ class Cookies {
         let cookiedata = this.getcookie();
         let geturl = new URLSearchParams(window.location.search);
         let link = geturl.get("k");
-        if(link == "/init")
-        {this.initlinkcookie()}
-        else{
+        if (link == "/init") {
+            this.initlinkcookie();
+        } else {
             if (cookiedata != null && cookiedata.charAt(0) == "h" && cookiedata.charAt(1) == "t") {
                 showdiv.style.height = 0;
                 this.loadcookie();
             } else {
-                this.initlinkcookie()
+                this.initlinkcookie();
             }
         }
     }
@@ -122,22 +120,27 @@ class Cookies {
         if (cookiedata != null && cookiedata.charAt(0) == "h" && cookiedata.charAt(1) == "t") {
             var script = document.createElement("script");
             script.onload = function () {
-                obj = JSON.parse(datasas);
+                obj = JSON.parse(data);
             };
             script.src = cookiedata;
             document.getElementsByTagName("head")[0].appendChild(script);
             showdiv.style.height = "fit-content";
             showtext.innerHTML = "Datenbank geladen!";
+            console.log(this.getcookie());
         }
     }
-    initlinkcookie(){
+    initlinkcookie() {
         showtext.innerHTML = "Bitte Initialisierung durchführen!";
-            const onsuccess = (decodedText, decodedResult) => {
-                this.setcookie(decodedText, 1);
-                cam.stopfilm();
-                this.loadcookie();
-            };
-            cam.film(onsuccess);
+        searchbar.placeholder = "Bitte Link einfügen!";
+        document.getElementById("go").onclick = function () {
+            initlink();
+        };
+        const onsuccess = (decodedText, decodedResult) => {
+            this.setcookie(decodedText, 1);
+            cam.stopfilm();
+            this.loadcookie();
+        };
+        cam.film(onsuccess);
     }
 }
 
@@ -197,6 +200,21 @@ const InvReal = new Cookies("realdata");
 
 const pdf = new PDF(20, 7, "FF Hohenkogl");
 
+//---------------------Manual-Init-of-Database-----------------------//
+
+function initlink() {
+    console.log();
+    let text = searchbar.value;
+    DataBase.setcookie(text, 1);
+    DataBase.loadcookie();
+    gobutton.onclick = function () {
+        ManualID();
+    };
+    try {
+        cam.stopfilm();
+    } catch {}
+}
+
 //------------------------Scan-Button-------------------------//
 
 function Scan() {
@@ -206,13 +224,11 @@ function Scan() {
     showdiv.style.height = "fit-content";
     showtext.innerHTML = "Bitte einen Barcode Scannen";
     const onsuccess = (decodedText, decodedResult) => {
-        if (cam.gettext() != (null || NaN)) {
-            cam.dectxt(decodedText);
-            resulte = cam.getid();
-            cam.stopfilm();
-            document.close();
-            window.location.replace("showdata.html?k=" + resulte);
-        }
+        cam.dectxt(decodedText);
+        resulte = cam.getid();
+        cam.stopfilm();
+        document.close();
+        window.location.replace("showdata.html?k=" + resulte);
     };
     cam.film(onsuccess);
 }
@@ -220,6 +236,9 @@ function Scan() {
 //-----------------------Inventory--------------------------//
 
 function Inv() {
+    gobutton.onclick = function () {
+        manualinv();
+    };
     try {
         cam.stopfilm();
     } catch {}
@@ -228,34 +247,45 @@ function Inv() {
 
     const onsuccess = (decodedText, decodedResult) => {
         cam.dectxt(decodedText);
-        if (init == true) {
-            init = false;
-            scanneddata.push(cam.getid());
-            var dat = obj.filter(obj=> obj.id === cam.getid())
-            room = dat[0].raumName;
-
-            realdata = obj.filter(obj=> obj.raumName === room)
-
-            realdata.forEach(element => {
-                realdata[realdata.indexOf(element)] = element.id 
-            });
-
-            realdata.forEach((element) => {
-                comparedata.push(element);
-            });
-            showtext.innerHTML = "Raum: " + room;
-            Inventoryresult();
-        } else if (init == false) {
-            if (cam.gettext() != null && cam.gettext() != NaN && !scanneddata.includes(cam.getid())) {
-                scanneddata.push(cam.getid());
-            }
-            Inventoryresult();
-        }
+        id();
     };
     cam.film(onsuccess);
     if (init == true) {
         showtext.innerHTML = "Bitte mit einem Barcode Initialisieren!";
     }
+}
+
+function id() {
+    if (init == true) {
+        init = false;
+        scanneddata.push(cam.getid());
+        var dat = obj.filter((obj) => obj.invInvNummer === cam.getid());
+        room = dat[0].raumName;
+
+        realdata = obj.filter((obj) => obj.raumName === room);
+
+        realdata.forEach((element) => {
+            realdata[realdata.indexOf(element)] = element.invInvNummer;
+        });
+
+        realdata.forEach((element) => {
+            comparedata.push(element);
+        });
+        showtext.innerHTML = "Raum: " + room;
+    } else if (init == false) {
+        if (!scanneddata.includes(cam.getid())) {
+            scanneddata.push(cam.getid());
+            console.log(cam.getid())
+            console.log(scanneddata)
+        }
+        
+    }
+    Inventoryresult();
+}
+
+function manualinv() {
+    cam.dectxt(searchbar.value);
+    id();
 }
 
 //----------------------Change-look-of-site---------------------------//
@@ -275,12 +305,12 @@ function showinv() {
 function InventoryReady() {
     pdf.Write("Inventur in Raum: " + room);
     pdf.Line();
-    
+
     if (notrightdata.length != 0) {
         pdf.Write("Dinge die hier nicht sein sollten:");
         notrightdata.forEach((element) => {
-            var comp = obj.filter(obj=> obj.id === element)
-            pdf.Write("Nummer: " + comp[0].id + " Name: " + comp[0].invName);
+            var comp = obj.filter((obj) => obj.invInvNummer === element);
+            pdf.Write("Nummer: " + comp[0].invInvNummer + " Name: " + comp[0].invName);
         });
         pdf.Line();
     }
@@ -288,33 +318,32 @@ function InventoryReady() {
         pdf.Write("Nicht eingescannt:");
         pdf.Line();
         comparedata.forEach((element) => {
-            var comp = obj.filter(obj=> obj.id === element)
-            pdf.Write("Nummer: " + comp[0].id + " Name: " + comp[0].invName);
+            var comp = obj.filter((obj) => obj.invInvNummer === element);
+            pdf.Write("Nummer: " + comp[0].invInvNummer + " Name: " + comp[0].invName);
         });
     }
     pdf.Save("Inventur-" + room);
 }
 
-//---------------------Save-Inventory-Data-in-Cookie----------------------------//
+//---------------------Save-Inventory-Data-in-localStorage----------------------------//
 
 function SaveInventory() {
     showtext.innerHTML = "Daten gespeichert!";
 
-    localStorage.setItem('scanned', scanneddata);
-    localStorage.setItem('compare', comparedata);
-    localStorage.setItem('real', realdata);
+    localStorage.setItem("scanned", scanneddata);
+    localStorage.setItem("compare", comparedata);
+    localStorage.setItem("real", realdata);
 }
 
 //---------------------Get-Inventory-Data----------------------------//
 
 function GetInventory() {
+    scanneddata = localStorage.getItem("scanned").split(",");
+    comparedata = localStorage.getItem("compare").split(",");
+    realdata = localStorage.getItem("real").split(",");
 
-    scanneddata = localStorage.getItem('scanned').split(",");
-    comparedata = localStorage.getItem('compare').split(",");
-    realdata = localStorage.getItem('real').split(",");
-
-    var dat = obj.filter(obj=> obj.id === scanneddata[0])
-    room = dat[0].raumName
+    var dat = obj.filter((obj) => obj.invInvNummer === scanneddata[0]);
+    room = dat[0].raumName;
 
     showtext.innerHTML = "Daten geladen! \n" + room;
 
@@ -330,26 +359,27 @@ function Inventoryresult() {
     list.innerHTML = "";
 
     scanneddata.forEach((item) => {
-        var resultel = obj.filter(obj=> obj.id === item)
-        if (comparedata.includes(resultel[0])) {
-            comparedata.splice(comparedata.indexOf(resultel[0]), 1);
-        } else if (!realdata.includes(resultel[0].id) && !notrightdata.includes(resultel[0].id)) {
-            notrightdata.push(resultel[0].id);
+        var resultel = obj.filter((obj) => obj.invInvNummer === item);
+        if (comparedata.includes(resultel[0].invInvNummer)) {
+            console.log(comparedata)
+            comparedata.splice(comparedata.indexOf(resultel[0].invInvNummer), 1);
+            console.log(comparedata)
+        } else if (!realdata.includes(resultel[0].invInvNummer) && !notrightdata.includes(resultel[0].invInvNummer)) {
+            notrightdata.push(resultel[0].invInvNummer);
         }
-        
     });
     notrightdata.forEach((item) => {
-        var resultel = obj.filter(obj=> obj.id === item)
+        var resultel = obj.filter((obj) => obj.invInvNummer === item);
         let li = document.createElement("li");
         li.classList.add("notinventory");
-        li.innerText = "Nummer: " + resultel[0].id + "\n" + "Name: " + resultel[0].invName;
+        li.innerText = "Nummer: " + resultel[0].invInvNummer + "\n" + "Name: " + resultel[0].invName;
         list.appendChild(li);
     });
     comparedata.forEach((element) => {
-        var resultel = obj.filter(obj=> obj.id === element)
+        var resultel = obj.filter((obj) => obj.invInvNummer === element);
         let li = document.createElement("li");
         li.classList.add("inventory");
-        li.innerText = "Nummer: " + resultel[0].id + "\n" + "Name: " + resultel[0].invName;
+        li.innerText = "Nummer: " + resultel[0].invInvNummer + "\n" + "Name: " + resultel[0].invName;
         list.appendChild(li);
     });
-} 
+}
