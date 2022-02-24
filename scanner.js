@@ -316,7 +316,6 @@ function InventoryReady() {
     }
     if (comparedata.length != 0) {
         pdf.Write("Nicht eingescannt:");
-        pdf.Line();
         comparedata.forEach((element) => {
             var comp = obj.filter((obj) => obj.invInvNummer === element);
             pdf.Write("Nummer: " + comp[0].invInvNummer + " Name: " + comp[0].invName);
