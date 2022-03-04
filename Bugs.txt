@@ -7,5 +7,5 @@ fixed--Bei manueller id 0 einbauen
 fixed--Inventur Liste verschwindet einfach
 fixed--Inventur anzeigen größe fixen.
 fixed--Bei Inventur Manuelle ID eingeben.
-Baujahr einfügen
 evtl. Taschenlampe
+Wenn man einen Code scanned der Keine Nummer enthällt verschwindet die Liste.
