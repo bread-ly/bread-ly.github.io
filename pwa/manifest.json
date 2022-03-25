@@ -5,7 +5,7 @@
     "background_color": "#ffe4e4",
     "display": "standalone",
     "scope": "/",
-    "start_url": "/index.html",
+    "start_url": "/",
     "description": "Inventory Scanner",
     "orientation": "portrait",
     "icons": [
