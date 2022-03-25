@@ -1,2 +1,6 @@
-self.addEventListener('fetch', event => {
+self.addEventListener('fetch', function(e){
+});
+
+
+self.addEventListener('install', function(event) {
 });
