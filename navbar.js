@@ -1,6 +1,5 @@
 var inputtext;
 var resulte;
-//const gobutton = document.getElementById("go");
 
 
 function ShowResult() {
@@ -38,3 +37,8 @@ function home() {
     document.close();
     window.location.replace("index.html");
 }
+function info() {
+    window.open("https://www.apache.org/licenses/LICENSE-2.0.html","https://mit-license.org/");
+    window.open("https://mit-license.org/");
+}
+

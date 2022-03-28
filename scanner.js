@@ -1,6 +1,3 @@
-const html5QrCode = new Html5Qrcode("reader");
-const conf = { fps: 10, aspectRatio: 1.0, qrbox: 200 }; //configuration of the camera, 10 frames per second and 1:1 ratio
-
 const showtext = document.getElementById("showtext");
 const showdiv = document.getElementById("showdiv");
 const readydiv = document.getElementById("readydiv");
@@ -13,20 +10,24 @@ const getbutton = document.getElementById("getinventory");
 const searchbar = document.getElementsByName("search")[0];
 const gobutton = document.getElementById("go");
 
-let obj;
-let idold;
-let init = true;
-let room;
+const conf = { fps: 10, aspectRatio: 1.0, qrbox: 200 }; //Konfiguration für den Scanner
+
+const zeilenabstand = 7;
+
+const now = new Date();
+
+var obj;
+var init = true;
+var room;
+
 var realdata = [];
 var scanneddata = [];
 var comparedata = [];
 var notrightdata = [];
-var zeilenabstand = 7;
-var resulte;
-let y = zeilenabstand;
 
-const now = new Date();
-let date = now.getDate() + "." + (now.getMonth() + 1) + "." + now.getFullYear();
+var resulte;
+
+var date = now.getDate() + "." + (now.getMonth() + 1) + "." + now.getFullYear();
 
 invreadybutton.style.visibility = "hidden";
 saveinventory.style.visibility = "hidden";
@@ -34,185 +35,30 @@ getinventory.style.visibility = "hidden";
 readydiv.style.height = "0px";
 loaddiv.style.height = "0px";
 
-//-------------------Class-for-Camera-----------------------//
-
-class Camera {
-    constructor(scanner, config) {
-        this.scanner = scanner;
-        this.config = config;
-        this.ready = false;
-    }
-    film(succ) {
-        this.scanner.start({ facingMode: "environment" }, this.config, succ); //start filming, looking for Scansuccess and config
-    }
-    stopfilm() {
-        this.scanner
-            .stop()
-            .then((ignore) => {
-                //stops the camera
-            })
-            .catch((err) => {
-                // Stop failed, handle it.
-            });
-        this.scanner.clear(); //clears the scanning area of the box
-    }
-    dectxt(decodedText) {
-        this.text = decodedText;
-
-        let idfirst = decodedText.charAt(0) + decodedText.charAt(1);
-        this.group = parseInt(idfirst);
-
-        let idlast = decodedText.charAt(2) + decodedText.charAt(3) + decodedText.charAt(4) + decodedText.charAt(5);
-        this.number = parseInt(idlast);
-    }
-    getid() {
-        return this.group + "/" + this.number;
-    }
-}
-
-//---------------------Class-for-Cookie-Managment---------------------//
-
-class Cookies {
-    constructor(name) {
-        this.cookiename = name;
-    }
-    setcookie(value, days) {
-        this.cookievalue = value;
-        this.cookiedays = days;
-
-        const d = new Date();
-        d.setTime(d.getTime() + this.cookiedays * 24 * 60 * 60 * 1000);
-        let expires = "expires=" + d.toUTCString();
-        document.cookie = this.cookiename + "=" + this.cookievalue + ";" + expires + ";path=/";
-    }
-    getcookie() {
-        let mycookiename = this.cookiename + "=";
-        let decodedCookie = decodeURIComponent(document.cookie);
-        let ca = decodedCookie.split(";");
-        for (let i = 0; i < ca.length; i++) {
-            let c = ca[i];
-            while (c.charAt(0) == " ") {
-                c = c.substring(1);
-            }
-            if (c.indexOf(mycookiename) == 0) {
-                return c.substring(mycookiename.length, c.length);
-            }
-        }
-        return null;
-    }
-    checkcookie() {
-        let cookiedata = this.getcookie();
-        let geturl = new URLSearchParams(window.location.search);
-        let link = geturl.get("k");
-        if (link == "/init") {
-            this.initlinkcookie();
-        } else {
-            if (cookiedata != null && cookiedata.charAt(0) == "h" && cookiedata.charAt(1) == "t") {
-                showdiv.style.height = 0;
-                this.loadcookie();
-            } else {
-                this.initlinkcookie();
-            }
-        }
-    }
-    loadcookie() {
-        let cookiedata = this.getcookie();
-        if (cookiedata != null && cookiedata.charAt(0) == "h" && cookiedata.charAt(1) == "t") {
-            var script = document.createElement("script");
-            script.onload = function () {
-                obj = JSON.parse(data);
-            };
-            script.src = cookiedata;
-            document.getElementsByTagName("head")[0].appendChild(script);
-            showdiv.style.height = "fit-content";
-            showtext.innerHTML = "Datenbank geladen!";
-            console.log(this.getcookie());
-        }
-    }
-    initlinkcookie() {
-        showtext.innerHTML = "Bitte Initialisierung durchführen!";
-        searchbar.placeholder = "Bitte Link einfügen!";
-        document.getElementById("go").onclick = function () {
-            initlink();
-        };
-        const onsuccess = (decodedText, decodedResult) => {
-            this.setcookie(decodedText, 1);
-            cam.stopfilm();
-            this.loadcookie();
-        };
-        cam.film(onsuccess);
-    }
-}
-
-class PDF {
-    constructor(x, columnspace, organisation) {
-        this.pdf = new jsPDF("p", "mm", "a4"); //Portrait und Maßeinheit Millimeter
-        this.pdf.setFont("Arial");
-        this.pdf.setFontSize(12);
-        this.pageheight = this.pdf.internal.pageSize.height;
-        this.pagewidth = this.pdf.internal.pageSize.width;
-        this.space = columnspace;
-        this.xc = x;
-        this.pdfnum = 1;
-        this.headerspace = 21;
-        this.yc = columnspace + this.headerspace;
-        this.org = organisation;
-        this.date = date;
-        this.Header();
-    }
-    Header() {
-        this.pdf.text(this.org, 10, this.headerspace / 2 + 5);
-        this.pdf.text("Inventur", this.pagewidth / 2 - 10, this.headerspace / 2 + 5);
-        this.pdf.text(this.date, this.pagewidth - this.date.length * 3, this.headerspace / 2 + 5);
-    }
-    checkforheight() {
-        if (this.pageheight - 14 < this.yc) {
-            this.pdf.addPage();
-            this.Header();
-            this.yc = 14 + this.headerspace;
-        }
-    }
-    Write(text) {
-        this.checkforheight();
-        this.pdf.text(text, this.xc, this.yc);
-        this.yc = this.yc + this.space;
-    }
-    Line() {
-        this.pdf.line(5, this.yc - 2, 200, this.yc - 2, "F");
-        this.yc = this.yc + this.space;
-    }
-    Save(name) {
-        this.pdf.save(name + this.pdfnum + ".pdf");
-        this.pdfnum += 1;
-    }
-}
-
 //---------------Initialize-Classes-----------------------//
+
+const html5QrCode = new Html5Qrcode("reader");
 
 const cam = new Camera(html5QrCode, conf);
 
-const DataBase = new Cookies("database");
-DataBase.checkcookie();
+const DataBase = new Link("database");
+DataBase.checklink();
 
-const InvScanned = new Cookies("scanneddata");
-const InvComp = new Cookies("comparedata");
-const InvReal = new Cookies("realdata");
-
-const pdf = new PDF(20, 7, "FF Hohenkogl");
+const pdf = new PDF(20, zeilenabstand, "FF Hohenkogl");
 
 //---------------------Manual-Init-of-Database-----------------------//
 
 function initlink() {
-    console.log();
     let text = searchbar.value;
-    DataBase.setcookie(text, 1);
-    DataBase.loadcookie();
-    gobutton.onclick = function () {
-        ManualID();
-    };
+    DataBase.setdata(text, 180);
+    DataBase.loadlink();
     try {
         cam.stopfilm();
     } catch {}
+    gobutton.onclick = function () {
+        ManualID();
+    };
+    searchbar.placeholder = "ID-Eingeben..";
 }
 
 //------------------------Scan-Button-------------------------//
@@ -275,8 +121,6 @@ function id() {
     } else if (init == false) {
         if (!scanneddata.includes(cam.getid())) {
             scanneddata.push(cam.getid());
-            console.log(cam.getid())
-            console.log(scanneddata)
         }
         
     }
@@ -358,14 +202,19 @@ function Inventoryresult() {
     list.innerHTML = "";
 
     scanneddata.forEach((item) => {
-        var resultel = obj.filter((obj) => obj.invInvNummer === item);
-        if (comparedata.includes(resultel[0].invInvNummer)) {
-            console.log(comparedata)
+        try{
+            var resultel = obj.filter((obj) => obj.invInvNummer === item);
+            if (comparedata.includes(resultel[0].invInvNummer)) {
             comparedata.splice(comparedata.indexOf(resultel[0].invInvNummer), 1);
-            console.log(comparedata)
-        } else if (!realdata.includes(resultel[0].invInvNummer) && !notrightdata.includes(resultel[0].invInvNummer)) {
+            } else if (!realdata.includes(resultel[0].invInvNummer) && !notrightdata.includes(resultel[0].invInvNummer)) {
             notrightdata.push(resultel[0].invInvNummer);
         }
+        }
+        catch(err)
+        {
+            alert("Gegenstand nicht in der Datenbank enthalten!");
+        }
+        
     });
     notrightdata.forEach((item) => {
         var resultel = obj.filter((obj) => obj.invInvNummer === item);

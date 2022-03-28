@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="">
-    <link rel="apple-touch-icon" href="/pwa/Brot.png"/>
+    <link rel="apple-touch-icon" href="/pwa/ffhk.png"/>
     <meta name="theme-color" content="#404040">
     <link rel="manifest" href="/pwa/manifest.json">
     <link rel="stylesheet" href="style.css" />
@@ -8,15 +8,19 @@
     <title>Show scanned Results!</title>
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/pwa/serviceworker.js');
+            navigator.serviceWorker.register('/serviceworker.js');
         }
     </script>
+    <script src="./classes/init.js"></script>
     <head> </head>
     <body>
         <script src="navbar.js"></script>
         <div class="topnav">
             <div class="homediv">
                 <button class="home" onclick="home()">Home</button>
+            </div>
+            <div class="homediv">
+                <button class="home" style="margin-left: 2px; border-radius: 20px;" onclick="info()">I</button>
             </div>
             <div class="search-container">
                 <input type="text" placeholder="ID-Eingeben.." name="search" id="search" />

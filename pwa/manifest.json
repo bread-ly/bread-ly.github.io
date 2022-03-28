@@ -1,16 +1,23 @@
 {
-    "name": "Lukas Adelmann",
-    "short_name": "Lukas",
+    "name": "Inventur Scanner",
+    "short_name": "Inv Scanner",
     "theme_color": "#404040",
     "background_color": "#ffe4e4",
     "display": "standalone",
     "scope": "/",
-    "start_url": "/",
+    "start_url": "https://ff-hk.github.io/",
     "description": "Inventory Scanner",
     "orientation": "portrait",
     "icons": [
         {
-            "src": "Brot.png",
+            "src": "ffhk.png",
+            "sizes": "1024x1024",
+            "purpose": "maskable"
+        }
+    ],
+    "icons": [
+        {
+            "src": "ffhk.png",
             "sizes": "1024x1024"
         }
     ]
