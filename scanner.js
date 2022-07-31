@@ -35,6 +35,11 @@ getinventory.style.visibility = "hidden";
 readydiv.style.height = "0px";
 loaddiv.style.height = "0px";
 
+//----------------Information--------------------------------//
+
+document.getElementById("appleicon").href = ;
+
+
 //---------------Initialize-Classes-----------------------//
 
 const html5QrCode = new Html5Qrcode("reader");
@@ -44,7 +49,7 @@ const cam = new Camera(html5QrCode, conf);
 const DataBase = new Link("database");
 DataBase.checklink();
 
-const pdf = new PDF(20, zeilenabstand, "FF Hohenkogl");
+const pdf = new PDF(20, zeilenabstand, "FF-Hohenkogl");
 
 //---------------------Manual-Init-of-Database-----------------------//
 
