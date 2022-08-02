@@ -10,14 +10,14 @@
     "orientation": "portrait",
     "icons": [
         {
-            "src": "*.png",
+            "src": "ffhk.png",
             "sizes": "1024x1024",
             "purpose": "maskable"
         }
     ],
     "icons": [
         {
-            "src": "*.png",
+            "src": "ffhk.png",
             "sizes": "1024x1024"
         }
     ]

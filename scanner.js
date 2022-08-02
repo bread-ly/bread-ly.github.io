@@ -37,8 +37,7 @@ loaddiv.style.height = "0px";
 
 //----------------Information--------------------------------//
 
-document.getElementById("appleicon").href = ;
-
+let infor = JSON.parse(inf)
 
 //---------------Initialize-Classes-----------------------//
 
@@ -49,7 +48,7 @@ const cam = new Camera(html5QrCode, conf);
 const DataBase = new Link("database");
 DataBase.checklink();
 
-const pdf = new PDF(20, zeilenabstand, "FF-Hohenkogl");
+const pdf = new PDF(20, zeilenabstand, infor.organisation);
 
 //---------------------Manual-Init-of-Database-----------------------//
 
