@@ -37,7 +37,10 @@ loaddiv.style.height = "0px";
 
 //----------------Information--------------------------------//
 
-let infor = JSON.parse(inf)
+const inf = JSON.parse(information)
+
+document.getElementById("appleicon").href = inf.picture;
+
 
 //---------------Initialize-Classes-----------------------//
 
@@ -48,7 +51,7 @@ const cam = new Camera(html5QrCode, conf);
 const DataBase = new Link("database");
 DataBase.checklink();
 
-const pdf = new PDF(20, zeilenabstand, infor.organisation);
+const pdf = new PDF(20, zeilenabstand, inf.organisation);
 
 //---------------------Manual-Init-of-Database-----------------------//
 

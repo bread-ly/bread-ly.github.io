@@ -1,1 +1,1 @@
-const inf = '{"organisation":"Test Organisation"}'
+const information = '{"organisation":"Test Organisation", "picture":"Logo.png"}';
